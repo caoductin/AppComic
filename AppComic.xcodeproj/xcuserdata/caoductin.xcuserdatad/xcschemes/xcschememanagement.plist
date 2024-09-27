@@ -7,7 +7,30 @@
 		<key>AppComic.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Copy of AppComic.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>7780090F2CA1B02300C86555</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7780091F2CA1B02800C86555</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>778009292CA1B02800C86555</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

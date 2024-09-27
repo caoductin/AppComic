@@ -39,7 +39,7 @@ class SignUpViewModel: ObservableObject {
         
         ServiceCall.post(parameter: parameters, path: "http://localhost:3000/api/auth/signup", isToken: false, withSuccess: { response in
             // Handle success
-            print("Response: \(response ?? [:])")
+            print("Response: \(response)")
             if let response = response  as? [String: Any]{
                 self.userModel = UserModel(dict: response)
             }

@@ -18,10 +18,11 @@ class LoginViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var user: UserModel?
     @Published var errorMessage: String = ""
-    @Published var isLoading: Bool = false
+    @Published var isShowAlert: Bool = false
+    @Published  var isLogin: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
-    
+  
     func debugPrint(){
         print(user)
     }
@@ -31,8 +32,8 @@ class LoginViewModel: ObservableObject {
                 errorMessage = "Email and Password are required"
                 return
             }
-            
-            isLoading = true
+        
+            isShowAlert = false
             errorMessage = ""
             
             let parameters: [String: Any] = [
@@ -42,17 +43,36 @@ class LoginViewModel: ObservableObject {
             
             ServiceCall.post(parameter: parameters, path: "http://localhost:3000/api/auth/signin", isToken: false, withSuccess: { response in
                 // Handle success
-                print("Response: \(response ?? [:])")
-                if let response = response  as? [String: Any]{
-                    self.userModel = UserModel(dict: response)
+//                Swift.debugPrint(response)
+                if let response = response as? NSDictionary {
+//                    Swift.debugPrint(response)
+//                    if response.value(forKey: "status") as? String ?? "" == "200" {
+//                        
+//                        print("not values for status")
+//                        Swift.debugPrint(response)
+                        if let response = response  as? [String: Any]{
+                            self.userModel = UserModel(dict: response)
+                            Swift.debugPrint(self.userModel)
+                        }
+                        self.isLogin = true
+                        
+                        
+//                    }else{
+//                        self.errorMessage = response.value(forKey: "message") as? String ?? "Fail"
+//                        self.isShowAlert = true
+//                    }
+                    //                print("Response: \(response ?? [:])")
+                    //                if let response = response  as? [String: Any]{
+                    //                    self.userModel = UserModel(dict: response)
+                    //                }
+                    //                // Process user data
+                    //                self.isLoading = false
+                    
                 }
-                // Process user data
-                self.isLoading = false
-            
             }, failure: { error in
                 // Handle error
                 self.errorMessage = error?.localizedDescription ?? "Unknown error"
-                self.isLoading = false
+                self.isShowAlert = true
             })
         }
     

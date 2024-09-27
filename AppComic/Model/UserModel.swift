@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class UserModel: Identifiable,Equatable{
+struct UserModel: Identifiable,Equatable{
     var id: String
     var userName: String
     var email: String
@@ -17,8 +17,8 @@ class UserModel: Identifiable,Equatable{
     var updateAt: String
     var createAt: String
     init(dict: Dictionary<String, Any>) {
-        self.id = dict["id"] as? String ?? ""
-               self.userName = dict["userName"] as? String ?? ""
+        self.id = dict["_id"] as? String ?? ""
+               self.userName = dict["username"] as? String ?? ""
                self.email = dict["email"] as? String ?? ""
                self.profilePicture = dict["profilePicture"] as? String ?? ""
                self.isAdmin = dict["isAdmin"] as? Bool ?? false

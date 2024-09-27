@@ -12,7 +12,7 @@ import UIKit
 
 class ServiceCall {
     
-    class func post(parameter: [String: Any], path: String, isToken: Bool = false, withSuccess: @escaping ( (_ responseObj: [String: Any]?) ->() ), failure: @escaping ( (_ error: Error?) ->() ) ) {
+    class func post(parameter: [String: Any], path: String, isToken: Bool = false,withSuccess: @escaping ( (_ responseObj: AnyObject?) ->() ), failure: @escaping ( (_ error: Error?) ->() ) ) {
         
         DispatchQueue.global(qos: .userInitiated).async {
             
@@ -62,7 +62,7 @@ class ServiceCall {
                 
                 do {
                     // Parse the response as JSON
-                    if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                         // Handle cookies from the response
                         
                                              if let httpResponse = response as? HTTPURLResponse {
@@ -79,6 +79,84 @@ class ServiceCall {
                                                      }
                                                  }
                                              }
+                        
+                        DispatchQueue.main.async {
+                            withSuccess(jsonDictionary)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            failure(NSError(domain: "Invalid response format", code: 400, userInfo: nil))
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                }
+            }
+
+            task.resume()
+        }
+    }
+    class func get(parameter: [String: Any], path: String, isToken: Bool = false, withSuccess: @escaping ( (_ responseObj: AnyObject?) ->() ), failure: @escaping ( (_ error: Error?) ->() )) {
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            
+            // Build URL with query parameters
+            var urlComponents = URLComponents(string: path)
+            var queryItems: [URLQueryItem] = []
+            
+            for (key, value) in parameter {
+                queryItems.append(URLQueryItem(name: key, value: "\(value)"))
+            }
+            urlComponents?.queryItems = queryItems
+
+            guard let url = urlComponents?.url else {
+                DispatchQueue.main.async {
+                    failure(NSError(domain: "Invalid URL", code: 400, userInfo: nil))
+                }
+                return
+            }
+
+            var request = URLRequest(url: url, timeoutInterval: 20)
+            request.httpMethod = "GET"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            // Add token if necessary
+    //        if isToken {
+    //            request.addValue(MainViewModel.shared.userObj.authToken, forHTTPHeaderField: "access_token")
+    //        }
+
+            // Make the network request
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+              
+                if let error = error {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                    return
+                }
+
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        failure(NSError(domain: "No data received", code: 400, userInfo: nil))
+                    }
+                    return
+                }
+                
+                do {
+                    // Parse the response as JSON
+                    if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                        // Handle cookies from the response
+                        
+                        if let httpResponse = response as? HTTPURLResponse {
+                            let cookies = HTTPCookie.cookies(withResponseHeaderFields: httpResponse.allHeaderFields as? [String: String] ?? [:], for: url)
+                            for cookie in cookies {
+                                if cookie.name == "access_token" {
+                                    UserDefaults.standard.setValue(cookie.value, forKey: "access_token")
+                                }
+                            }
+                        }
                         
                         DispatchQueue.main.async {
                             withSuccess(jsonDictionary)

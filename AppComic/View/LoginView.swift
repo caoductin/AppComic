@@ -99,9 +99,15 @@ struct LoginView: View {
                    }
             // Optionally, you can add a submit button or other UI elements here
         }
+        .alert(isPresented: $loginVM.isShowAlert, content: {
+            Alert(title: Text("cao duc tin"), message: Text(loginVM.errorMessage) , dismissButton: .default(Text("Ok")))
+        })
         .padding()
     }
 }
 #Preview {
-    LoginView()
+    NavigationStack{
+        LoginView()
+    }
+
 }
