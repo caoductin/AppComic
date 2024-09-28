@@ -15,7 +15,7 @@ struct PostDisplay: View {
                 AsyncImage(url: URL(string: post.image)) { image in
                     image.resizable()
                         .scaledToFit()
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth:.screenWidth)
                         .clipShape(RoundedRectangle(cornerRadius: 10)) 
                        
                     
@@ -36,6 +36,7 @@ struct PostDisplay: View {
                 
                 Text(post.title)
                     .font(.system(size: 20, weight: .bold, design: .default))
+                    .foregroundStyle(Color.black)
                 
                 HStack{
                     Text("0")

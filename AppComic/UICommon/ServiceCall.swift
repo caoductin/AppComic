@@ -122,10 +122,7 @@ class ServiceCall {
             request.httpMethod = "GET"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             
-            // Add token if necessary
-    //        if isToken {
-    //            request.addValue(MainViewModel.shared.userObj.authToken, forHTTPHeaderField: "access_token")
-    //        }
+
 
             // Make the network request
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -176,4 +173,76 @@ class ServiceCall {
             task.resume()
         }
     }
+    
+    class func getComment(parameter: [String: Any], path: String, isToken: Bool = false, withSuccess: @escaping (AnyObject?) ->(), failure: @escaping (Error?) ->()) {
+
+        DispatchQueue.global(qos: .userInitiated).async {
+
+            // Build URL with query parameters
+            var urlComponents = URLComponents(string: path)
+            var queryItems: [URLQueryItem] = []
+
+            for (key, value) in parameter {
+                queryItems.append(URLQueryItem(name: key, value: "\(value)"))
+            }
+            urlComponents?.queryItems = queryItems
+
+            guard let url = urlComponents?.url else {
+                DispatchQueue.main.async {
+                    failure(NSError(domain: "Invalid URL", code: 400, userInfo: nil))
+                }
+                return
+            }
+
+            var request = URLRequest(url: url, timeoutInterval: 20)
+            request.httpMethod = "GET"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            // Make the network request
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                    return
+                }
+
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        failure(NSError(domain: "No data received", code: 400, userInfo: nil))
+                    }
+                    return
+                }
+                
+                // Debugging: Print raw response
+                if let rawResponse = String(data: data, encoding: .utf8) {
+                 //   print("Raw Response: \(rawResponse)")
+                }
+                
+                do {
+                    if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary] {
+                        DispatchQueue.main.async {
+                            withSuccess(jsonArray as AnyObject)
+                        }
+                    } else if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                        DispatchQueue.main.async {
+                            withSuccess(jsonDictionary)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            failure(NSError(domain: "Invalid response format", code: 400, userInfo: nil))
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                }
+            }
+
+
+            task.resume()
+        }
+    }
+
 }

@@ -7,7 +7,9 @@ struct HTMLTextView: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isEditable = false
+        textView.isScrollEnabled = true // Enable scrolling for long content
         textView.backgroundColor = .clear
+        textView.textContainer.lineBreakMode = .byWordWrapping
         return textView
     }
     

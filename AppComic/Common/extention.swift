@@ -64,6 +64,49 @@ extension CGFloat {
 }
 
 extension String {
+    func htmlToAttributedString() -> NSAttributedString? {
+        guard let data = self.data(using: .utf8) else { return nil }
+        do {
+            return try NSAttributedString(
+                data: data,
+                options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
+                documentAttributes: nil
+            )
+        } catch {
+            print("Error converting HTML to AttributedString:", error)
+            return nil
+        }
+    }
+
+    func htmlToString() -> Text {
+        guard let attrString = htmlToAttributedString() else {
+            return Text(self) // Fallback to plain text if conversion fails
+        }
+
+        var resultText = Text("")
+        
+        attrString.enumerateAttributes(in: NSRange(location: 0, length: attrString.length), options: []) { attributes, range, _ in
+            let substring = (attrString.string as NSString).substring(with: range)
+
+            var textSegment = Text(substring)
+
+            if let font = attributes[.font] as? UIFont {
+                let isBold = font.fontDescriptor.symbolicTraits.contains(.traitBold)
+                textSegment = isBold ? textSegment.bold() : textSegment
+            }
+
+            if let foregroundColor = attributes[.foregroundColor] as? UIColor {
+                textSegment = textSegment.foregroundColor(Color(foregroundColor))
+            }
+
+            resultText = resultText + textSegment
+        }
+
+        return resultText
+    }
+}
+
+extension String {
     func elapsedTimeString() -> String? {
         // Create a date formatter
         let dateFormatter = DateFormatter()
