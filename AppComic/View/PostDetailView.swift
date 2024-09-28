@@ -8,25 +8,48 @@
 import SwiftUI
 
 struct PostDetailView: View {
-    @State var postDetailVM: PostModel = PostModel(dict: [:])
+    var postDetailVM: PostModel = PostModel(dict: [:])
+    @State var comment: [CommentModel] = [CommentModel(dict: [:])]
+    // Create a State to hold the plain text content
+      @State private var plainTextContent: Text = Text("")
     var body: some View {
         VStack{
-            Text(postDetailVM.title)
-                .font(.headline)
-            AsyncImage(url: URL(string: postDetailVM.image)) { image in
-                image.resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity)
-             
-            } placeholder: {
-                Color.red
+            ScrollView{
+                LazyVStack {
+                    
+                    VStack{
+                        Text(postDetailVM.title)
+                            .font(.headline)
+                        AsyncImage(url: URL(string: postDetailVM.image)) { image in
+                            image.resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: .infinity)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: 10, style: .circular)
+                                )
+                            
+                        } placeholder: {
+                            Color.red
+                        }
+                        plainTextContent
+                        ForEach(comment,id: \.id){
+                            comment in
+                            UserCommentCell(comment: comment)
+                        }
+                        
+                        
+                    }
+                    .padding()
+                }
             }
-            HTMLTextView(htmlContent: postDetailVM.content)
-                .scaledToFit()
-                .frame(maxHeight: .infinity)
-        
         }
-        .padding()
+        .padding(.bottom,.bottomInsets)
+        .onAppear {
+                 // Convert HTML to plain text and store in the state
+                 plainTextContent = postDetailVM.content.htmlToString()
+             }
+        .navigationTitle(postDetailVM.title)
+    
     }
 }
 
@@ -40,5 +63,13 @@ struct PostDetailView: View {
                                                   "slug": "mt-ph-n-b-khi-t-v-mua-t-9-t-nhng-lm-hp-ng-440-triu-ng",
                                                   "createdAt": "2024-09-27T04:13:31.559Z",
                                                   "updatedAt": "2024-09-27T04:13:31.559Z",
-                                                  "__v": 0]))
+                                                  "__v": 0]),comment: [CommentModel(dict:["_id": "66f63164a86c6bd5bef81e74",
+                                                                                          "content": "ăn nhiều quá\n",
+                                                                                          "postId": "66f630eba86c6bd5bef81e48",
+                                                                                          "userId": "66f18b872c50f92086b94a3d",
+                                                                                          "likes": [],
+                                                                                          "numberOfLikes": 0,
+                                                                                          "createdAt": "2024-09-27T04:15:32.386Z",
+                                                                                          "updatedAt": "2024-09-27T04:15:32.386Z",
+                                                                                          "__v": 0])])
 }

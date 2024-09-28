@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7779A9742CA78FFE001E8A16 /* HeadlineDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A9732CA78FFE001E8A16 /* HeadlineDisplay.swift */; };
+		7779A9762CA7EF1C001E8A16 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A9752CA7EF1C001E8A16 /* CommentModel.swift */; };
+		7779A9782CA8506B001E8A16 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A9772CA8506B001E8A16 /* CommentViewModel.swift */; };
+		7779A97A2CA85D98001E8A16 /* UserCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A9792CA85D98001E8A16 /* UserCommentCell.swift */; };
 		778009142CA1B02300C86555 /* AppComicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778009132CA1B02300C86555 /* AppComicApp.swift */; };
 		778009182CA1B02800C86555 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 778009172CA1B02800C86555 /* Assets.xcassets */; };
 		7780091B2CA1B02800C86555 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7780091A2CA1B02800C86555 /* Preview Assets.xcassets */; };
@@ -53,6 +57,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7779A9732CA78FFE001E8A16 /* HeadlineDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineDisplay.swift; sourceTree = "<group>"; };
+		7779A9752CA7EF1C001E8A16 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
+		7779A9772CA8506B001E8A16 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
+		7779A9792CA85D98001E8A16 /* UserCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommentCell.swift; sourceTree = "<group>"; };
 		778009102CA1B02300C86555 /* AppComic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppComic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		778009132CA1B02300C86555 /* AppComicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComicApp.swift; sourceTree = "<group>"; };
 		778009172CA1B02800C86555 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -178,6 +186,7 @@
 				778009612CA53F4A00C86555 /* PostView.swift */,
 				778009682CA6ED3900C86555 /* HomeView.swift */,
 				7780096C2CA6FCC100C86555 /* PostDetailView.swift */,
+				7779A9732CA78FFE001E8A16 /* HeadlineDisplay.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -191,6 +200,7 @@
 				778009552CA3EFBC00C86555 /* PasswordStrengthUtility.swift */,
 				7780095B2CA5099300C86555 /* CustomTab.swift */,
 				7780096A2CA6F81800C86555 /* PostDisplay.swift */,
+				7779A9792CA85D98001E8A16 /* UserCommentCell.swift */,
 			);
 			path = UICommon;
 			sourceTree = "<group>";
@@ -201,6 +211,7 @@
 				778009472CA3162800C86555 /* UserModel.swift */,
 				778009592CA4D42E00C86555 /* TabData.swift */,
 				7780095D2CA53BBA00C86555 /* PostModel.swift */,
+				7779A9752CA7EF1C001E8A16 /* CommentModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -211,6 +222,7 @@
 				778009492CA319BE00C86555 /* LoginViewModel.swift */,
 				778009532CA3DE5E00C86555 /* SignUpViewModel.swift */,
 				7780095F2CA53E9700C86555 /* PostViewModel.swift */,
+				7779A9772CA8506B001E8A16 /* CommentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -354,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7779A9782CA8506B001E8A16 /* CommentViewModel.swift in Sources */,
 				778009602CA53E9700C86555 /* PostViewModel.swift in Sources */,
 				778009422CA2702E00C86555 /* CustomTextField.swift in Sources */,
 				7780093F2CA1C53800C86555 /* LoginView.swift in Sources */,
@@ -364,14 +377,17 @@
 				778009442CA2F75C00C86555 /* ButtonCustom.swift in Sources */,
 				7780096B2CA6F81800C86555 /* PostDisplay.swift in Sources */,
 				778009482CA3162800C86555 /* UserModel.swift in Sources */,
+				7779A9762CA7EF1C001E8A16 /* CommentModel.swift in Sources */,
 				778009652CA6B2A500C86555 /* extention.swift in Sources */,
 				778009562CA3EFBC00C86555 /* PasswordStrengthUtility.swift in Sources */,
 				778009522CA3DC5A00C86555 /* SignUpView.swift in Sources */,
 				778009672CA6B31100C86555 /* HTMLTextView.swift in Sources */,
+				7779A97A2CA85D98001E8A16 /* UserCommentCell.swift in Sources */,
 				778009142CA1B02300C86555 /* AppComicApp.swift in Sources */,
 				778009582CA452F500C86555 /* MainView.swift in Sources */,
 				778009622CA53F4A00C86555 /* PostView.swift in Sources */,
 				7780094A2CA319BE00C86555 /* LoginViewModel.swift in Sources */,
+				7779A9742CA78FFE001E8A16 /* HeadlineDisplay.swift in Sources */,
 				7780096D2CA6FCC100C86555 /* PostDetailView.swift in Sources */,
 				778009542CA3DE5E00C86555 /* SignUpViewModel.swift in Sources */,
 				778009692CA6ED3900C86555 /* HomeView.swift in Sources */,
