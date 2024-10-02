@@ -9,10 +9,55 @@ import SwiftUI
 
 struct PostCellHZ: View {
     @State var post: PostModelSD = PostModelSD(dict: [:])
+    @State var commentVM: CommentViewModel = CommentViewModel(postID: "66f630eba86c6bd5bef81e48")
     var body: some View {
         VStack{
+            HStack{
+                AsyncImage(url: URL(string: post.image)) { image in
+                    image.resizable()
+                        .scaledToFill()
+                        .frame(width: 150,height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .padding(.horizontal,5)
+                    
+                    
+                } placeholder: {
+                    ProgressView()
+                }
+
+                    VStack{
+                        Text(post.title)
+                            .font(.system(size: 18, weight: .bold, design: .default))
+                            .fixedSize(horizontal: false, vertical: true)
+                            .lineLimit(3)
+                            .multilineTextAlignment(.leading)
+                           
+                     Spacer()
+                        
+                        HStack{
+                        
+                            Image(systemName: "message")
+                            Text("\(commentVM.commment.count)")
+                                .padding(.trailing,10)
+                            
+                            Text(post.category)
+                        }
+                        .foregroundColor(.gray.opacity(0.4))
+                        .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
+                                            }
+                        .frame(height: 100) // Match the image height
+                           .padding(.leading, 8)
+              
+            
+                
+                
+            }
+            
             
         }
+        .padding(.bottom,10)
+        
+        Divider()
     }
 }
 

@@ -1,5 +1,6 @@
 
 import SwiftUI
+import SwiftData
 
 class PostViewModel: ObservableObject {
     static var shared: PostViewModel = PostViewModel()
@@ -11,6 +12,7 @@ class PostViewModel: ObservableObject {
     @Published var user: UserModel?
     @Published var errorMessage: String = ""
     @Published var isLoading: Bool = false
+    @Environment(\.modelContext) private var modelContext
     
     init() {
         self.getPost()
@@ -32,8 +34,7 @@ class PostViewModel: ObservableObject {
                let postsArray = response["posts"] as? [[String: Any]] {
                 
                 let postModels = postsArray.compactMap { PostModel(dict: $0) }
-               
-                    self.postModel = postModels
+                self.postModel = postModels
                     self.isLoading = false
                     Swift.debugPrint(self.postModel)
                 
@@ -50,4 +51,20 @@ class PostViewModel: ObservableObject {
             }
         })
     }
+    
+    func savePostsToSwiftData(postModels: [PostModelSD]) {
+        for postSD in postModels {
+            modelContext.insert(postSD)
+            print("Inserted Post: \(postSD.title)") // Add a print statement to verify
+        }
+
+        // Optionally, save the context to persist the data
+        do {
+            try modelContext.save()
+            print("Data saved successfully.")
+        } catch {
+            print("Error saving data: \(error.localizedDescription)")
+        }
+    }
+
 }

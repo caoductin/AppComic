@@ -34,13 +34,17 @@ struct LoginView: View {
                 .font(.system(size: 18, weight: .bold, design: .default))
                 .foregroundStyle(.gray.opacity(0.9))
                 .frame(minWidth: 0,maxWidth: .infinity,alignment: .trailing)
+        
             
-            ButtonCustom(title: "Login") {
-                loginVM.login()
-                print(loginVM.errorMessage)
-            loginVM.debugPrint()
+//            NavigationLink {
+//                MainView()
+//            } label: {
             
-            }
+                ButtonCustom(title: "Login") {
+                    loginVM.login()
+                }
+//            }
+          
 
             
             ZStack{

@@ -34,6 +34,20 @@ struct PostModel: Identifiable,Equatable{
     static func == (lhs: PostModel, rhs: PostModel) -> Bool {
         return lhs.id == rhs.id
     }
+    // Convert PostModel to dictionary for PostModelSD
+     func toDict() -> [String: Any] {
+         return [
+             "_id": self.id,
+             "userId": self.userID,
+             "content": self.content,
+             "title": self.title,
+             "image": self.image,
+             "category": self.category,
+             "slug": self.slug,
+             "createdAt": self.createAt,
+             "updatedAt": self.updateAt
+         ]
+     }
 }
 
 //{

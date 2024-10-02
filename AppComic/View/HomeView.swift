@@ -7,9 +7,17 @@
 
 import SwiftUI
 
+
+import SwiftUI
+import SwiftData
+
 struct HomeView: View {
     @StateObject var viewModel: PostViewModel = PostViewModel.shared
     @State private var currentIndex: Int = 0
+    @Environment(\.modelContext) private var modelContext
+    
+    // Query to fetch saved PostModelSD from SwiftData
+    @Query(sort: \PostModelSD.createAt, order: .reverse) var PostData: [PostModelSD]
     var body: some View {
         NavigationStack{
             VStack{
@@ -17,15 +25,17 @@ struct HomeView: View {
                 ScrollView{
                     ScrollView(.horizontal, showsIndicators: false) {  // Horizontal ScrollView
                         LazyHStack {
-                            ForEach(viewModel.postModel.indices, id: \.self) { index in
-                                HeadlineDisplay(post: viewModel.postModel[index])
+                            ForEach(PostData.indices, id: \.self) { index in
+                                HeadlineDisplay(post: PostData[index])
                                     .padding(.horizontal, 8)
+                                //fix the HeadlineDisplay
                             }
                         }
                         .padding(.vertical)
                     }
                     HStack(spacing: 8) {
-                                    ForEach(0..<viewModel.postModel.count, id: \.self) { index in
+                        ForEach(0..<PostData.count, id: \.self) {
+                                        index in
                                         Circle()
                                             .fill(currentIndex == index ? Color.blue : Color.gray) // Change color based on selection
                                             .frame(width: 10, height: 10)
@@ -34,14 +44,13 @@ struct HomeView: View {
                                 }
                                 .padding(.top, 10) // Add some padding above the dots
                     
-                    
+              
                     VStack{
                         
-                        ForEach(viewModel.postModel) { post in
-                            
+                        ForEach(PostData) { post in
+                  
                             NavigationLink {
-                                var comments = CommentViewModel(postID: post.id)
-                                PostDetailView(postDetailVM: post,comment: comments.commment)
+                                PostDetailView(postDetailVM: post,commentVM: CommentViewModel(postID: post.id))
                             } label: {
                                 PostDisplay(post: post)
                             }
@@ -65,7 +74,30 @@ struct HomeView: View {
 
 #Preview {
     NavigationStack{
-        HomeView()
+        @MainActor
+        func setupMockData(context: ModelContext) {
+            let mockPosts = PostModelSD.mockData()
+            mockPosts.forEach { post in
+                context.insert(post)
+            }
+            mockPosts.forEach{post in
+                Swift.debugPrint(post.title)
+            }
+            do {
+                try context.save()
+                print("Mock data inserted successfully")
+            } catch {
+                print("Failed to save mock data: \(error)")
+            }
+        }
+        
+        let container = try! ModelContainer(for: PostModelSD.self)
+        let context = container.mainContext
+        
+        setupMockData(context: context)
+        
+        return HomeView()
+            .environment(\.modelContext, context)
     }
    
 }
