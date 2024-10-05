@@ -21,10 +21,10 @@ struct PostView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             Text(post.title)
                                 .font(.headline)
-                            HTMLTextView(htmlContent: post.content)
-                                .scaledToFit()
-                                .frame(maxHeight: .infinity)
-                         
+//                            HTMLTextView(htmlContent: post.content)
+//                                .scaledToFit()
+//                                .frame(maxHeight: .infinity)
+//                         
                             //                                .font(.system(.headline))
                             // Optionally load image if you have image URL
                          

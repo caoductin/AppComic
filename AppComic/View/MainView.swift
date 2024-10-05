@@ -22,7 +22,8 @@ struct MainView: View {
                     .padding(.top,10)
                     .padding(.bottom,-19)
                     .tag(TabData.new)
-                
+                AccountView()
+                    .tag(TabData.account)
              
                 
             })

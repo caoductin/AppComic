@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-struct TabCategory: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+enum TabCategory:String, CaseIterable, Identifiable {
+    case newest = "Mới nhất"
+    case law = "pháp luật"
+    case education = "Giáo dục"
+    case entertainment = "giải trí"
+    case travel = "Du lịch"
+    case sports = "Thể thao"
+    case science = "Khoa học"
+    
+    var id: String { self.rawValue } // Required for Identifiable
 }
 
-#Preview {
-    TabCategory()
-}

@@ -26,10 +26,10 @@ struct AppComicApp: App {
         
         Swift.debugPrint("this is \(existingPosts)")  // This will give you the existing posts
         
-        if !existingPosts.isEmpty {
-            print("Existing posts found in context. Skipping API call.")
-            return // Exit the function if there are existing posts
-        }
+//        if !existingPosts.isEmpty {
+//            print("Existing posts found in context. Skipping API call.")
+//            return // Exit the function if there are existing posts
+//        }
         
         
         do {
@@ -73,7 +73,9 @@ struct AppComicApp: App {
         WindowGroup {
             NavigationStack {
                 if !loginVM.isLogin {
-                    HomeView()
+                  //  HomeView()
+                   LoginView()
+//                    CreatePost()
                 } else {
                     MainView()
                 }

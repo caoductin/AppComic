@@ -32,7 +32,14 @@ struct AccountView: View {
                 
                 VStack(spacing: 10){
                     Divider()
+                    NavigationLink {
+                        CreatePost()
+                    } label: {
                         CellAccountView(imageName: "person", title: "Profile User")
+                    }
+                    .foregroundStyle(.black)
+
+                        
                     
                     Divider()
                         .frame(height: 1)
@@ -88,5 +95,7 @@ struct AccountView: View {
 }
 
 #Preview {
-    AccountView()
+    NavigationStack{
+        AccountView()
+    }
 }

@@ -148,4 +148,38 @@ extension String {
         dateFormatterForFullDate.dateFormat = "MMM dd, yyyy" // Custom date format for more than 10 days
         return dateFormatterForFullDate.string(from: date)
     }
+    //convert date to //dd/mm/yyyy
+    func toFormattedDateString() -> String? {
+           // Step 1: Create a DateFormatter for the input string (ISO 8601 format)
+           let inputFormatter = DateFormatter()
+           inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+           
+           // Step 2: Convert the string to a Date object
+           if let date = inputFormatter.date(from: self) {
+               
+               // Step 3: Create another DateFormatter for the output string (desired format)
+               let outputFormatter = DateFormatter()
+               outputFormatter.dateFormat = "dd/MM/yyyy"
+               
+               // Step 4: Convert the Date object back to the desired string format
+               return outputFormatter.string(from: date)
+           } else {
+               return nil  // Return nil if the string couldn't be parsed
+           }
+       }
+}
+extension Color {
+    init(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.hasPrefix("#") ? String(hexSanitized.dropFirst()) : hexSanitized
+        
+        var rgb: UInt64 = 0
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+        
+        let red = Double((rgb >> 16) & 0xFF) / 255.0
+        let green = Double((rgb >> 8) & 0xFF) / 255.0
+        let blue = Double(rgb & 0xFF) / 255.0
+        
+        self.init(.sRGB, red: red, green: green, blue: blue, opacity: 1.0)
+    }
 }

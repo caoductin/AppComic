@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CommentView: View {
-    @ObservedObject var commentVM: CommentViewModel = CommentViewModel(postID: "66f630eba86c6bd5bef81e48")
+    @ObservedObject var commentVM: CommentViewModel = CommentViewModel()
     var body: some View {
         VStack{
             Button(action: {

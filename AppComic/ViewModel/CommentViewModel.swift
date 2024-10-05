@@ -17,6 +17,8 @@ class CommentViewModel: ObservableObject {
     @Published var content: String = ""
     private var userId: String = ""
     init(){
+        self.getComment(postId: "66f630eba86c6bd5bef81e48")
+        self.likeComment(commentID: "66fa518639a96b4b46303431")
     }
     
     init(postID: String){
@@ -62,8 +64,7 @@ class CommentViewModel: ObservableObject {
                             // Add the newly created comment to the comment list
                             self.commment.append(newComment)
                             self.isLoading = false
-                            
-                            print("Comment created: \(newComment.content)")
+
                         }
                       
                     } else {
@@ -78,6 +79,46 @@ class CommentViewModel: ObservableObject {
                 })
             
 
+    }
+    
+    func likeComment(commentID: String){
+        isLoading = true
+        errorMessage = ""
+        let parameters: [String: Any] = [:]
+        let pathLikeCommment = "http://localhost:3000/api/comment/likeComment/\(commentID)"
+            
+            ServiceCall.putComment(parameter: parameters, path: pathLikeCommment, isToken: true, withSuccess: { response in
+                // Handle success
+                print("like comment was run")
+                Swift.debugPrint(response)
+                print("this is self.comment\(self.commment)")
+                if let response = response as? NSDictionary{
+                    
+                    if let index = self.commment.firstIndex(where: { $0.id == "\(commentID)" }) {
+                        // Update the comment at the found index
+                        let updatedComment = CommentModel(dict: response)
+                        Swift.debugPrint("this is update comment:\(updatedComment)")
+                        self.commment[index] = updatedComment
+                        
+                    }
+                    else{
+                        print("this is not runt")
+                    }
+                    print("this is not runt")
+                    Swift.debugPrint(self.commment)
+                }
+                else{
+                    print("reponse khong phai la 1 api")
+                }
+                
+            }, failure: { error in
+                DispatchQueue.main.async {
+                    print("fail roi")
+                    self.errorMessage = error?.localizedDescription ?? "Unknown error"
+                    self.isLoading = false
+                }
+            })
+        
     }
     
     func getComment(postId: String) {
@@ -98,12 +139,8 @@ class CommentViewModel: ObservableObject {
                                   self.commment = commments
                                   self.isLoading = false
                               }
-//                print("this is comment")
-//                for comment in commments {
-//                    print(comment.content)
-//                }
-         
-                Swift.debugPrint(self.commment)
+                         
+                Swift.debugPrint("this is selfcommnet in get commne \(self.commment)")
             }
             else{
                 print("phan tich khong thanh cong")
