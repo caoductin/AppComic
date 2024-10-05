@@ -126,9 +126,10 @@ class CommentViewModel: ObservableObject {
         errorMessage = ""
         
         let parameters: [String: Any] = [:]
-        let pathGetCommment = "http://localhost:3000/api/comment/getPostComments/\(postId)"
         
-        ServiceCall.getComment(parameter: parameters, path: pathGetCommment, isToken: false, withSuccess: { response in
+        let pathGetCommnet = Globs.GetPost_URL + postId
+        
+        ServiceCall.getComment(parameter: parameters, path: pathGetCommnet, isToken: false, withSuccess: { response in
             // Handle success
             //Swift.debugPrint(response)
             if let response = response as? [NSDictionary]{

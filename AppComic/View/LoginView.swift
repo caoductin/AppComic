@@ -8,7 +8,7 @@
 import SwiftUI
 func validate(name: String?) {
     if name != nil {
-        print("Valid name: \(name ?? "con cac")")
+        print("Valid name: \(name ?? "")")
     } else {
         print("Invalid name components. Please enter a full name.")
     }
@@ -35,10 +35,6 @@ struct LoginView: View {
                 .foregroundStyle(.gray.opacity(0.9))
                 .frame(minWidth: 0,maxWidth: .infinity,alignment: .trailing)
         
-            
-//            NavigationLink {
-//                MainView()
-//            } label: {
             
                 ButtonCustom(title: "Login") {
                     loginVM.login()
@@ -97,6 +93,14 @@ struct LoginView: View {
                
                 
             }
+            NavigationLink {
+                SignUpView()
+            } label: {
+                Text("Click here to sign up")
+                    
+            }
+
+
             Text(loginVM.errorMessage)
                 .onAppear {
                        print(loginVM.errorMessage)
@@ -104,7 +108,7 @@ struct LoginView: View {
             // Optionally, you can add a submit button or other UI elements here
         }
         .alert(isPresented: $loginVM.isShowAlert, content: {
-            Alert(title: Text("cao duc tin"), message: Text(loginVM.errorMessage) , dismissButton: .default(Text("Ok")))
+            Alert(title: Text("Thông báo"), message: Text(loginVM.errorMessage) , dismissButton: .default(Text("Ok")))
         })
         .padding()
     }

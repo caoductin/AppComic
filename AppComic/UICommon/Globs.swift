@@ -7,12 +7,16 @@
 
 import SwiftUI
 
-struct Globs: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    Globs()
+struct Globs{
+    
+    static let BASE_URL = "http://localhost:3000/api/"
+    
+    static let Login_URL = BASE_URL + "auth/signin"
+    
+    static let SignUp_URL = BASE_URL + "auth/signup"
+    
+    static let GetPost_URL = BASE_URL + "post/getposts"
+    
+    static let GetComment_URL = BASE_URL + "comment/getPostComments/"
+    
 }

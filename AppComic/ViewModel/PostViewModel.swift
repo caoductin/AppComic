@@ -86,7 +86,7 @@ class PostViewModel: ObservableObject {
         
         let parameters: [String: Any] = [:]
         
-        ServiceCall.getComment(parameter: parameters, path: "http://localhost:3000/api/post/getposts", isToken: false, withSuccess: { response in
+        ServiceCall.getComment(parameter: parameters, path: Globs.GetPost_URL, isToken: false, withSuccess: { response in
             // Handle success
             if let response = response as? [String: Any],
                let postsArray = response["posts"] as? [[String: Any]] {
