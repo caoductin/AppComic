@@ -23,13 +23,17 @@ class SignUpViewModel: ObservableObject {
     }
     
     func login() {
+        isLoading = false
+        errorMessage = ""
+        
         guard !email.isEmpty, !password.isEmpty , !txtuserName.isEmpty else {
             errorMessage = "Email and Password are required"
+            isLoading = true
             return
         }
         
-        isLoading = true
-        errorMessage = ""
+     
+ 
         
         let parameters: [String: Any] = [
             "username":txtuserName,
@@ -49,7 +53,7 @@ class SignUpViewModel: ObservableObject {
         }, failure: { error in
             // Handle error
             self.errorMessage = error?.localizedDescription ?? "Unknown error"
-            self.isLoading = false
+            self.isLoading = true
         })
     }
 }

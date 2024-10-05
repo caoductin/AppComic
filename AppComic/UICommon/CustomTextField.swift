@@ -33,6 +33,68 @@ struct CustomTextField: View {
 }
 
 
+struct CustomTextFieldView: View {
+    @Binding  var txt: String// To store the text input
+    @FocusState private var isTextFieldFocused: Bool  // To track if the text field is focused
+    let action: (()-> Void)?
+
+    var body: some View {
+        VStack {
+            Spacer()
+            HStack {
+                // Your custom TextField
+                TextField("Nhập tin nhắn", text: $txt)
+                    .padding()
+                    .textInputAutocapitalization(.none)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.none)
+                    .focused($isTextFieldFocused)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.gray.opacity(0.2))
+                    )
+                    .frame(height: 40)
+                    .overlay(
+                        HStack {
+                            Spacer()  // Push the button to the right side
+                            if isTextFieldFocused || !txt.isEmpty {
+                                Button(action: {
+                                    if let action = action{
+                                        action()
+                                        submitText()
+                                    }
+                                    else{
+                                        print("chua co action ")
+                                    }
+                                }) {
+                                Image(systemName: "arrowtriangle.forward.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30)
+                                }
+                                .transition(.move(edge: .trailing))  // Smooth transition
+                                .animation(.easeInOut, value: isTextFieldFocused || !txt.isEmpty)
+                            }
+                        }
+                        .padding(.trailing, 10)  // Add padding so the button doesn't overlap the text
+                    )
+            }
+            .padding()
+            
+     
+        }
+    }
+    
+    func submitText() {
+        // Handle the submit action
+        print("Submitted text: \(txt)")
+        txt = ""  // Clear text after submitting
+        isTextFieldFocused = false  // Remove focus from the text field
+    }
+}
+
+
+
 struct CustomSecureField: View {
     @State var lable: String = "Please enter the name"
     @Binding var txt: String 
@@ -104,5 +166,7 @@ struct CustomSecureField: View {
 }
 #Preview {
     @State var txt: String = ""
-    return CustomSecureField(txt: $txt)
+    return CustomTextFieldView(txt:$txt) {
+        print("tin dep trai ")
+    }
 }

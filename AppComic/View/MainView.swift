@@ -14,18 +14,20 @@ struct MainView: View {
             TabView(selection: $tab,
                     content:  {
                 
-                LoginView()
+                HomeView()
                     .tag(TabData.home)
                 SignUpView()
                 .tag(TabData.explore)
                 PostView()
+                    .padding(.top,10)
+                    .padding(.bottom,-19)
                     .tag(TabData.new)
                 
              
                 
             })
 //
-            .tabViewStyle(DefaultTabViewStyle())
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                      .onAppear{
                          UIScrollView.appearance().isScrollEnabled = false
                      }

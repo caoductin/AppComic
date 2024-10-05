@@ -100,6 +100,10 @@ struct SignUpView: View {
             }
         
         }
+        .alert(isPresented: $signupVM.isLoading) {
+                     
+                 Alert(title: Text("Error"), message: Text( signupVM.errorMessage ), dismissButton: .default(Text("Ok")))
+             }
         .padding()
         .navigationTitle("")
         .navigationBarBackButtonHidden()

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct PostView: View {
     
     @StateObject var viewModel: PostViewModel = PostViewModel.shared
@@ -48,6 +49,9 @@ struct PostView: View {
 
             
         }
+        .frame(width: .screenWidth ,height: .screenHeight)
+        .clipped()
+        .tag(TabData.new)
     }
 }
 
