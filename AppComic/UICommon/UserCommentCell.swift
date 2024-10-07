@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SDWebImageSwiftUI
 struct UserCommentCell: View {
     @Binding var comment: CommentModel // Change to @Binding
 //    @StateObject var userModel:UserViewModel = UserViewModel(userId: "66f3c539606c6f21af9ee86e")
@@ -20,16 +20,19 @@ struct UserCommentCell: View {
     var body: some View {
         VStack {
             HStack {
-                AsyncImage(url: URL(string: "\(userModel.profilePicture)")) { image in
-                    image.resizable()
+                WebImage(url: URL(string: userModel.profilePicture)) { image in
+                       image.resizable()
                         .scaledToFill()
                         .frame(width:40,height: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 40))
-                       
-                    
-                } placeholder: {
-                    ProgressView()
-                }
+                        .clipShape(
+                            
+                           Circle()                              )
+                   } placeholder: {
+                           Rectangle().foregroundColor(.gray)
+                   }
+                   // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
+
+                   .transition(.fade(duration: 0.5)) // Fade Transition
                
                 Text(userModel.userName) // You may want to replace this with a dynamic user name
                 Spacer()

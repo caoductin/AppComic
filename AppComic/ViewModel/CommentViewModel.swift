@@ -55,7 +55,7 @@ class CommentViewModel: ObservableObject {
               let pathCreateComment = "http://localhost:3000/api/comment/create"
         // Making the API call using a POST request
                 ServiceCall.post(parameter: parameters, path: pathCreateComment, isToken: true, withSuccess: { response in
-                    Swift.debugPrint(response)
+                    Swift.debugPrint(response ?? "")
                     if let responseDict = response as?  NSDictionary {
                         // Assuming the response dictionary contains the newly created comment data
                          let newComment = CommentModel(dict: responseDict)
@@ -90,7 +90,7 @@ class CommentViewModel: ObservableObject {
             ServiceCall.putComment(parameter: parameters, path: pathLikeCommment, isToken: true, withSuccess: { response in
                 // Handle success
                 print("like comment was run")
-                Swift.debugPrint(response)
+                Swift.debugPrint(response ?? "")
                 print("this is self.comment\(self.commment)")
                 if let response = response as? NSDictionary{
                     
@@ -127,11 +127,12 @@ class CommentViewModel: ObservableObject {
         
         let parameters: [String: Any] = [:]
         
-        let pathGetCommnet = Globs.GetPost_URL + postId
+        let pathGetCommnet = Globs.GetComment_URL + postId
         
         ServiceCall.getComment(parameter: parameters, path: pathGetCommnet, isToken: false, withSuccess: { response in
             // Handle success
-            //Swift.debugPrint(response)
+            print("this is rospne for image ")
+            Swift.debugPrint(response)
             if let response = response as? [NSDictionary]{
                 
                 let commments = response.compactMap { CommentModel(dict: $0) }

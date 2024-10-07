@@ -6,22 +6,27 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct PostDisplay: View {
     @State var post: PostModelSD = PostModelSD(dict: [:])
     var body: some View {
             VStack(alignment: .leading, spacing: 10) {
-                
-                AsyncImage(url: URL(string: post.image)) { image in
-                    image.resizable()
-                        .scaledToFit()
-                        .frame(maxWidth:.screenWidth)
-                        .clipShape(RoundedRectangle(cornerRadius: 10)) 
-                       
+                WebImage(url: URL(string: post.image)) { image in
+                       image.resizable()
+                        .scaledToFill()
+                        .frame(width:.screenWidth - 20,height: 200)
+                        .clipShape(
+                            
+                            RoundedRectangle(cornerRadius: 10)                                )
+                   } placeholder: {
+                           Rectangle().foregroundColor(.gray)
+                   }
+                   // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
+
+                   .transition(.fade(duration: 0.5)) // Fade Transition with duration
                     
-                } placeholder: {
-                    ProgressView()
-                }
+
                 HStack{
                     Text(post.category)
                         .font(.system(size: 17, weight: .regular, design: .default))

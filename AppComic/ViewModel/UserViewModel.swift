@@ -28,7 +28,7 @@ class UserViewModel: ObservableObject {
         ServiceCall.getComment(parameter: parameters, path: pathGetAllUser, isToken: true, withSuccess: { response in
             // Handle success
            
-            Swift.debugPrint(response)
+            Swift.debugPrint(response ?? "")
             if let response = response as? NSDictionary{
                 
                 if let user = response.value(forKey: "users") as? [NSDictionary]{

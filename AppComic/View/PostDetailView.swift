@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import SDWebImageSwiftUI
 
 struct PostDetailView: View {
     var postDetailVM: PostModelSD = PostModelSD(dict: [:])
@@ -28,17 +29,21 @@ struct PostDetailView: View {
                     VStack{
                         Text(postDetailVM.title)
                             .font(.headline)
-                        AsyncImage(url: URL(string: postDetailVM.image)) { image in
-                            image.resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: .infinity)
+                        WebImage(url: URL(string: postDetailVM.image)) { image in
+                               image.resizable()
+                                .frame(width: .screenWidth - 40)
                                 .clipShape(
-                                    RoundedRectangle(cornerRadius: 10, style: .circular)
-                                )
-                            
-                        } placeholder: {
-                            Color.red
-                        }
+                                    
+                                    RoundedRectangle(cornerRadius: 10)                                )
+                                .padding()
+                           } placeholder: {
+                                   Rectangle().foregroundColor(.gray)
+                           }
+                           // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
+
+                           .transition(.fade(duration: 0.5)) // Fade Transition with duration
+                           .scaledToFit()
+                           .frame(width: 300, height: 300, alignment: .center) // Set desired image frame
                         
                         plainTextContent
                         

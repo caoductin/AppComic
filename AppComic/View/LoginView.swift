@@ -110,6 +110,8 @@ struct LoginView: View {
         .alert(isPresented: $loginVM.isShowAlert, content: {
             Alert(title: Text("Thông báo"), message: Text(loginVM.errorMessage) , dismissButton: .default(Text("Ok")))
         })
+        .navigationBarBackButtonHidden()
+        .toolbar(.hidden)
         .padding()
     }
 }

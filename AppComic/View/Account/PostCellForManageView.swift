@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct PostCellForManageView: View {
     @State var post:PostModelSD = PostModelSD(dict: [:])
@@ -14,19 +15,21 @@ struct PostCellForManageView: View {
     @State var onEdit:(()->())?
     var body: some View {
         HStack(alignment:.top){
-            
-            AsyncImage(url: URL(string: post.image)) { image in
-                image
-                    .resizable()
-                        .scaledToFill()
-                        .frame(width: 100,height: 80)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        .padding(.horizontal,5)
-                
-            } placeholder: {
-                ProgressView()
-            }
-            
+            WebImage(url: URL(string: post.image)) { image in
+                   image.resizable()
+                    .scaledToFill()
+                    .frame(width: 100,height: 80)
+                    .clipShape(
+                        
+                        RoundedRectangle(cornerRadius: 10)                                )
+               } placeholder: {
+                       Rectangle().foregroundColor(.gray)
+               }
+               // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
+
+               .transition(.fade(duration: 0.5)) // Fade Transition with duration
+  
+ 
             VStack{
                 Text(post.title)
                     .font(.system(size: 16, weight: .bold, design: .default))
@@ -36,7 +39,7 @@ struct PostCellForManageView: View {
             
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(minWidth: 0,maxWidth: 200,alignment: .leading)
-                    .background(.gray)
+                  
                 HStack{
                     Text("\(post.createAt.toFormattedDateString()!)")
                     Button {

@@ -25,6 +25,9 @@
 		7779A97C2CA8F753001E8A16 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A97B2CA8F753001E8A16 /* CommentView.swift */; };
 		7779A97E2CAA43E4001E8A16 /* testView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A97D2CAA43E4001E8A16 /* testView.swift */; };
 		7779A9802CAAE431001E8A16 /* PostModelSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A97F2CAAE431001E8A16 /* PostModelSD.swift */; };
+		777C546C2CB2F18D00B2F071 /* Atributika in Frameworks */ = {isa = PBXBuildFile; productRef = 777C546B2CB2F18D00B2F071 /* Atributika */; };
+		777C546E2CB2F18D00B2F071 /* AtributikaViews in Frameworks */ = {isa = PBXBuildFile; productRef = 777C546D2CB2F18D00B2F071 /* AtributikaViews */; };
+		777C54712CB40B7100B2F071 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 777C54702CB40B7100B2F071 /* SDWebImageSwiftUI */; };
 		778009142CA1B02300C86555 /* AppComicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778009132CA1B02300C86555 /* AppComicApp.swift */; };
 		778009182CA1B02800C86555 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 778009172CA1B02800C86555 /* Assets.xcassets */; };
 		7780091B2CA1B02800C86555 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7780091A2CA1B02800C86555 /* Preview Assets.xcassets */; };
@@ -125,6 +128,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				777C54712CB40B7100B2F071 /* SDWebImageSwiftUI in Frameworks */,
+				777C546C2CB2F18D00B2F071 /* Atributika in Frameworks */,
+				777C546E2CB2F18D00B2F071 /* AtributikaViews in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +308,11 @@
 			dependencies = (
 			);
 			name = AppComic;
+			packageProductDependencies = (
+				777C546B2CB2F18D00B2F071 /* Atributika */,
+				777C546D2CB2F18D00B2F071 /* AtributikaViews */,
+				777C54702CB40B7100B2F071 /* SDWebImageSwiftUI */,
+			);
 			productName = AppComic;
 			productReference = 778009102CA1B02300C86555 /* AppComic.app */;
 			productType = "com.apple.product-type.application";
@@ -374,6 +385,10 @@
 				Base,
 			);
 			mainGroup = 778009072CA1B02300C86555;
+			packageReferences = (
+				777C546A2CB2F18D00B2F071 /* XCRemoteSwiftPackageReference "Atributika" */,
+				777C546F2CB40B7100B2F071 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = 778009112CA1B02300C86555 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -778,6 +793,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		777C546A2CB2F18D00B2F071 /* XCRemoteSwiftPackageReference "Atributika" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/psharanda/Atributika.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.5;
+			};
+		};
+		777C546F2CB40B7100B2F071 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		777C546B2CB2F18D00B2F071 /* Atributika */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 777C546A2CB2F18D00B2F071 /* XCRemoteSwiftPackageReference "Atributika" */;
+			productName = Atributika;
+		};
+		777C546D2CB2F18D00B2F071 /* AtributikaViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 777C546A2CB2F18D00B2F071 /* XCRemoteSwiftPackageReference "Atributika" */;
+			productName = AtributikaViews;
+		};
+		777C54702CB40B7100B2F071 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 777C546F2CB40B7100B2F071 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 778009082CA1B02300C86555 /* Project object */;
 }

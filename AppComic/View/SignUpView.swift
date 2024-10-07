@@ -120,5 +120,8 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView()
+    NavigationStack{
+        SignUpView()
+    }
+ 
 }

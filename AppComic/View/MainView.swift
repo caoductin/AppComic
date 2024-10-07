@@ -16,7 +16,7 @@ struct MainView: View {
                 
                 HomeView()
                     .tag(TabData.home)
-                SignUpView()
+                TabHomeView(selectedCategory: TabCategory.newest.rawValue)
                 .tag(TabData.explore)
                 PostView()
                     .padding(.top,10)
