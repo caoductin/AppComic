@@ -20,12 +20,7 @@ class LoginViewModel: ObservableObject {
     @Published var errorMessage: String = ""
     @Published var isShowAlert: Bool = false
     @Published  var isLogin: Bool = false
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    func debugPrint(){
-        print(user)
-    }
+  
     
     func login() {
         
@@ -45,10 +40,10 @@ class LoginViewModel: ObservableObject {
             "password": password
         ]
         
-        ServiceCall.post(parameter: parameters, path: "http://localhost:3000/api/auth/signin", isToken: false, withSuccess: { response in
+        ServiceCall.post(parameter: parameters, path: Globs.Login_URL, isToken: false, withSuccess: { response in
             // Handle success
             print("what is this")
-           Swift.debugPrint(response)
+           Swift.debugPrint(response ?? "")
             if let response = response as? NSDictionary {
                 if  let statusCode = response.value(forKey: "statusCode") as? Int, statusCode == 400 || statusCode == 404 { // check if it invalid password or gamr
                     self.errorMessage = "Invalid email or password"

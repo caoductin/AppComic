@@ -6,24 +6,37 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct PostCellHZ: View {
-    @State var post: PostModelSD = PostModelSD(dict: [:])
-    @State var commentVM: CommentViewModel = CommentViewModel(postID: "66f630eba86c6bd5bef81e48")
+    @State var post: PostModelSD = PostModelSD(dict: [:])//chỉ hiện thi trong view
+    @StateObject var commentVM: CommentViewModel = CommentViewModel(postID: "66f630eba86c6bd5bef81e48")// lấy dự liệu từ CommmentViewModel nen truyen StateObject
+    
     var body: some View {
         VStack{
             HStack{
-                AsyncImage(url: URL(string: post.image)) { image in
-                    image.resizable()
+                WebImage(url: URL(string: post.image)) { image in
+                       image.resizable()
                         .scaledToFill()
                         .frame(width: 150,height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .clipShape(
+                                RoundedRectangle(cornerRadius: 5)
+                                            )
                         .padding(.horizontal,5)
-                    
-                    
-                } placeholder: {
-                    ProgressView()
-                }
+                   } placeholder: {
+                           Rectangle().foregroundColor(.gray)
+                   }
+//                AsyncImage(url: URL(string: post.image)) { image in
+//                    image.resizable()
+//                        .scaledToFill()
+//                        .frame(width: 150,height: 100)
+//                        .clipShape(RoundedRectangle(cornerRadius: 5))
+//                        .padding(.horizontal,5)
+//                    
+//                    
+//                } placeholder: {
+//                    ProgressView()
+//                }
 
                     VStack{
                         Text(post.title)

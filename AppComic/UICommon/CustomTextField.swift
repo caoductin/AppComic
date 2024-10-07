@@ -11,7 +11,7 @@ struct CustomTextField: View {
     var lable: String = "Please enter the name"
     @Binding var txt: String
     var title:String = "Email"
-   
+    @State var keyboardType: UIKeyboardType = .default
     var body: some View {
         VStack{
             Text(title)
@@ -23,6 +23,7 @@ struct CustomTextField: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .padding()
+                .keyboardType(keyboardType)
                 .background(
                     RoundedRectangle(cornerRadius: 40)
                         .fill(Color.gray.opacity(0.2)) // Background color with opacity

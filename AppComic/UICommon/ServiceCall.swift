@@ -199,6 +199,11 @@ class ServiceCall {
             request.httpMethod = "GET"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
+            if isToken, let accessToken = UserDefaults.standard.string(forKey: "access_token") {
+                print("Access Token: \(accessToken)")
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            }
+            
             // Make the network request
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
@@ -320,5 +325,155 @@ class ServiceCall {
             task.resume()
         }
     }
+    
+
+    class func putComment(parameter: [String: Any], path: String, isToken: Bool = false, withSuccess: @escaping (_ responseObj: AnyObject?) -> (), failure: @escaping (_ error: Error?) -> ()) {
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let url = URL(string: path) else {
+                DispatchQueue.main.async {
+                    failure(NSError(domain: "Invalid URL", code: 400, userInfo: nil))
+                }
+                return
+            }
+            
+            var request = URLRequest(url: url, timeoutInterval: 20)
+            request.httpMethod = "PUT" // Change to PUT
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            // Serialize parameters into JSON for the request body
+            guard let httpBody = try? JSONSerialization.data(withJSONObject: parameter, options: []) else {
+                DispatchQueue.main.async {
+                    failure(NSError(domain: "Invalid request body", code: 400, userInfo: nil))
+                }
+                return
+            }
+            
+            request.httpBody = httpBody
+            
+            // Add the token to the Authorization header if isToken is true
+            if isToken, let accessToken = UserDefaults.standard.string(forKey: "access_token") {
+                print("Access Token: \(accessToken)")
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            }
+            
+            // Start the network request
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                    return
+                }
+                
+                // Log the response status code
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("HTTP Status Code: \(httpResponse.statusCode)")
+                    print("Response Headers: \(httpResponse.allHeaderFields)")
+                }
+                
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        failure(NSError(domain: "No data received", code: 400, userInfo: nil))
+                    }
+                    return
+                }
+                
+                do {
+                    if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                        DispatchQueue.main.async {
+                            withSuccess(jsonDictionary)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            failure(NSError(domain: "Invalid response format", code: 400, userInfo: nil))
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                }
+            }
+            
+            task.resume()
+        }
+    }
+
+    //this functioin call api delete
+    class func delete(parameter: [String: Any], path: String, isToken: Bool = false, withSuccess: @escaping (_ responseObj: AnyObject?) -> (), failure: @escaping (_ error: Error?) -> ()) {
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let url = URL(string: path) else {
+                DispatchQueue.main.async {
+                    failure(NSError(domain: "Invalid URL", code: 400, userInfo: nil))
+                }
+                return
+            }
+            
+            var request = URLRequest(url: url, timeoutInterval: 20)
+            request.httpMethod = "DELETE" // Use DELETE method
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            // Serialize parameters into JSON for the request body, if necessary
+            guard let httpBody = try? JSONSerialization.data(withJSONObject: parameter, options: []) else {
+                DispatchQueue.main.async {
+                    failure(NSError(domain: "Invalid request body", code: 400, userInfo: nil))
+                }
+                return
+            }
+            
+            request.httpBody = httpBody
+            
+            // Add the token to the Authorization header if isToken is true
+            if isToken, let accessToken = UserDefaults.standard.string(forKey: "access_token") {
+                print("Access Token: \(accessToken)")
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            }
+            
+            // Start the network request
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                    return
+                }
+                
+                // Log the response status code
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("HTTP Status Code: \(httpResponse.statusCode)")
+                    print("Response Headers: \(httpResponse.allHeaderFields)")
+                }
+                
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        failure(NSError(domain: "No data received", code: 400, userInfo: nil))
+                    }
+                    return
+                }
+                
+                do {
+                    if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                        DispatchQueue.main.async {
+                            withSuccess(jsonDictionary)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            failure(NSError(domain: "Invalid response format", code: 400, userInfo: nil))
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        failure(error)
+                    }
+                }
+            }
+            
+            task.resume()
+        }
+    }
+
+    
 
 }

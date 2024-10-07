@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @StateObject var signupVM = SignUpViewModel.shared;
+    @State private var emailErrorMessage: String = ""
     private var strength: Int {
           return PasswordStrengthUtility.calculateStrength(for: signupVM.password)
       }
@@ -22,7 +23,8 @@ struct SignUpView: View {
                 .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
                 .padding(.bottom,25)
             CustomTextField(lable: "Enter user name", txt: $signupVM.txtuserName, title: "User Name")
-            CustomTextField(lable: "Enter Email", txt: $signupVM.email, title: "Email")
+            CustomTextField(lable: "Enter Email", txt: $signupVM.email, title: "Email",keyboardType: .emailAddress)
+               
             CustomSecureField(lable: "At least 8 character", txt: $signupVM.password, title: "Password")
             
                       
@@ -42,8 +44,7 @@ struct SignUpView: View {
                 .frame(minWidth: 0,maxWidth: .infinity,alignment: .trailing)
             
             ButtonCustom(title: "Sign Up") {
-                signupVM.login()
-                print(signupVM.errorMessage)
+                signupVM.Signup()
                 
             }
             
@@ -52,7 +53,7 @@ struct SignUpView: View {
                 Divider()
                     .frame(height: 1) // Ensure the line is thin
                     .background(Color.gray.opacity(0.4))
-                Text("Or Login With ")
+                Text("Or Sign up with ")
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.gray.opacity(0.6))
                     .padding(.horizontal, 10) // Add padding around the text
@@ -98,6 +99,12 @@ struct SignUpView: View {
                 
                 
             }
+            NavigationLink {
+                LoginView()
+            } label: {
+                Text("Click here to login")
+            }
+
         
         }
         .alert(isPresented: $signupVM.isLoading) {
@@ -109,8 +116,12 @@ struct SignUpView: View {
         .navigationBarBackButtonHidden()
         .toolbar(.hidden)
     }
+   
 }
 
 #Preview {
-    SignUpView()
+    NavigationStack{
+        SignUpView()
+    }
+ 
 }

@@ -16,13 +16,14 @@ struct MainView: View {
                 
                 HomeView()
                     .tag(TabData.home)
-                SignUpView()
+                TabHomeView(selectedCategory: TabCategory.newest.rawValue)
                 .tag(TabData.explore)
                 PostView()
                     .padding(.top,10)
                     .padding(.bottom,-19)
                     .tag(TabData.new)
-                
+                AccountView()
+                    .tag(TabData.account)
              
                 
             })

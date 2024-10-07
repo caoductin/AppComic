@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct TestViewDelete: View {
+    //@StateObject var postVm: PostViewModel = PostViewModel(postId: "66fe2ed76d3758f3d37f8008")
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Hello, World!")
     }
 }
 
