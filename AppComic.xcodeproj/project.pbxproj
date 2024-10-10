@@ -18,6 +18,13 @@
 		775D13452CB0C88E0097EF54 /* PostCellForManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D13442CB0C88E0097EF54 /* PostCellForManageView.swift */; };
 		775D13472CB0D44A0097EF54 /* TestViewDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D13462CB0D44A0097EF54 /* TestViewDelete.swift */; };
 		775D13492CB1731E0097EF54 /* Globs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D13482CB1731E0097EF54 /* Globs.swift */; };
+		7760AC762CB7F5E600413C74 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7760AC752CB7F5E600413C74 /* GoogleService-Info.plist */; };
+		7760AC792CB7F68200413C74 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7760AC782CB7F68200413C74 /* FirebaseAuth */; };
+		7760AC7B2CB7F68200413C74 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7760AC7A2CB7F68200413C74 /* FirebaseFirestore */; };
+		7760AC7D2CB7F68200413C74 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7760AC7C2CB7F68200413C74 /* FirebaseStorage */; };
+		7760AC7F2CB813C000413C74 /* ImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7760AC7E2CB813C000413C74 /* ImagePickerViewModel.swift */; };
+		7760AC812CB816C800413C74 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7760AC802CB816C800413C74 /* ImagePickerView.swift */; };
+		7760AC832CB8215600413C74 /* RichTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7760AC822CB8215600413C74 /* RichTextEditorView.swift */; };
 		7779A9742CA78FFE001E8A16 /* HeadlineDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A9732CA78FFE001E8A16 /* HeadlineDisplay.swift */; };
 		7779A9762CA7EF1C001E8A16 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A9752CA7EF1C001E8A16 /* CommentModel.swift */; };
 		7779A9782CA8506B001E8A16 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7779A9772CA8506B001E8A16 /* CommentViewModel.swift */; };
@@ -85,6 +92,10 @@
 		775D13442CB0C88E0097EF54 /* PostCellForManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCellForManageView.swift; sourceTree = "<group>"; };
 		775D13462CB0D44A0097EF54 /* TestViewDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewDelete.swift; sourceTree = "<group>"; };
 		775D13482CB1731E0097EF54 /* Globs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globs.swift; sourceTree = "<group>"; };
+		7760AC752CB7F5E600413C74 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7760AC7E2CB813C000413C74 /* ImagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewModel.swift; sourceTree = "<group>"; };
+		7760AC802CB816C800413C74 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		7760AC822CB8215600413C74 /* RichTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorView.swift; sourceTree = "<group>"; };
 		7779A9732CA78FFE001E8A16 /* HeadlineDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineDisplay.swift; sourceTree = "<group>"; };
 		7779A9752CA7EF1C001E8A16 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		7779A9772CA8506B001E8A16 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
@@ -131,6 +142,9 @@
 				777C54712CB40B7100B2F071 /* SDWebImageSwiftUI in Frameworks */,
 				777C546C2CB2F18D00B2F071 /* Atributika in Frameworks */,
 				777C546E2CB2F18D00B2F071 /* AtributikaViews in Frameworks */,
+				7760AC7B2CB7F68200413C74 /* FirebaseFirestore in Frameworks */,
+				7760AC792CB7F68200413C74 /* FirebaseAuth in Frameworks */,
+				7760AC7D2CB7F68200413C74 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +173,7 @@
 				775D13422CB0C1360097EF54 /* ManagePostView.swift */,
 				775D13442CB0C88E0097EF54 /* PostCellForManageView.swift */,
 				775D13462CB0D44A0097EF54 /* TestViewDelete.swift */,
+				7760AC802CB816C800413C74 /* ImagePickerView.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -192,6 +207,7 @@
 				778009402CA2701300C86555 /* UICommon */,
 				7780093D2CA1C4F900C86555 /* View */,
 				778009132CA1B02300C86555 /* AppComicApp.swift */,
+				7760AC752CB7F5E600413C74 /* GoogleService-Info.plist */,
 				778009172CA1B02800C86555 /* Assets.xcassets */,
 				778009192CA1B02800C86555 /* Preview Content */,
 			);
@@ -279,6 +295,8 @@
 				7780095F2CA53E9700C86555 /* PostViewModel.swift */,
 				7779A9772CA8506B001E8A16 /* CommentViewModel.swift */,
 				7732E2B52CAF999900E8F6B6 /* UserViewModel.swift */,
+				7760AC7E2CB813C000413C74 /* ImagePickerViewModel.swift */,
+				7760AC822CB8215600413C74 /* RichTextEditorView.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -312,6 +330,9 @@
 				777C546B2CB2F18D00B2F071 /* Atributika */,
 				777C546D2CB2F18D00B2F071 /* AtributikaViews */,
 				777C54702CB40B7100B2F071 /* SDWebImageSwiftUI */,
+				7760AC782CB7F68200413C74 /* FirebaseAuth */,
+				7760AC7A2CB7F68200413C74 /* FirebaseFirestore */,
+				7760AC7C2CB7F68200413C74 /* FirebaseStorage */,
 			);
 			productName = AppComic;
 			productReference = 778009102CA1B02300C86555 /* AppComic.app */;
@@ -388,6 +409,7 @@
 			packageReferences = (
 				777C546A2CB2F18D00B2F071 /* XCRemoteSwiftPackageReference "Atributika" */,
 				777C546F2CB40B7100B2F071 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				7760AC772CB7F68200413C74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 778009112CA1B02300C86555 /* Products */;
 			projectDirPath = "";
@@ -407,6 +429,7 @@
 			files = (
 				7780091B2CA1B02800C86555 /* Preview Assets.xcassets in Resources */,
 				778009182CA1B02800C86555 /* Assets.xcassets in Resources */,
+				7760AC762CB7F5E600413C74 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +460,7 @@
 				775D13452CB0C88E0097EF54 /* PostCellForManageView.swift in Sources */,
 				7732E2B42CAD592A00E8F6B6 /* PostCellHZ.swift in Sources */,
 				778009422CA2702E00C86555 /* CustomTextField.swift in Sources */,
+				7760AC832CB8215600413C74 /* RichTextEditorView.swift in Sources */,
 				7780093F2CA1C53800C86555 /* LoginView.swift in Sources */,
 				7780095C2CA5099300C86555 /* CustomTab.swift in Sources */,
 				7779A97E2CAA43E4001E8A16 /* testView.swift in Sources */,
@@ -447,6 +471,7 @@
 				778009442CA2F75C00C86555 /* ButtonCustom.swift in Sources */,
 				7779A9802CAAE431001E8A16 /* PostModelSD.swift in Sources */,
 				7780096B2CA6F81800C86555 /* PostDisplay.swift in Sources */,
+				7760AC812CB816C800413C74 /* ImagePickerView.swift in Sources */,
 				7732E2B62CAF999900E8F6B6 /* UserViewModel.swift in Sources */,
 				7731B4E42CB0263600F3652B /* AccountView.swift in Sources */,
 				778009482CA3162800C86555 /* UserModel.swift in Sources */,
@@ -457,6 +482,7 @@
 				7779A97C2CA8F753001E8A16 /* CommentView.swift in Sources */,
 				778009522CA3DC5A00C86555 /* SignUpView.swift in Sources */,
 				778009672CA6B31100C86555 /* HTMLTextView.swift in Sources */,
+				7760AC7F2CB813C000413C74 /* ImagePickerViewModel.swift in Sources */,
 				775D13492CB1731E0097EF54 /* Globs.swift in Sources */,
 				7779A97A2CA85D98001E8A16 /* UserCommentCell.swift in Sources */,
 				775D13432CB0C1360097EF54 /* ManagePostView.swift in Sources */,
@@ -795,6 +821,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7760AC772CB7F68200413C74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 11.3.0;
+			};
+		};
 		777C546A2CB2F18D00B2F071 /* XCRemoteSwiftPackageReference "Atributika" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/psharanda/Atributika.git";
@@ -814,6 +848,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7760AC782CB7F68200413C74 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7760AC772CB7F68200413C74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		7760AC7A2CB7F68200413C74 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7760AC772CB7F68200413C74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		7760AC7C2CB7F68200413C74 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7760AC772CB7F68200413C74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		777C546B2CB2F18D00B2F071 /* Atributika */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 777C546A2CB2F18D00B2F071 /* XCRemoteSwiftPackageReference "Atributika" */;

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SDWebImageSwiftUI
 
 struct PostView: View {
     
@@ -27,15 +27,25 @@ struct PostView: View {
 //                         
                             //                                .font(.system(.headline))
                             // Optionally load image if you have image URL
-                         
-                            AsyncImage(url: URL(string: post.image)) { image in
-                                image.resizable()
-                                    .scaledToFit()
-                                    .frame(maxWidth: .infinity)
-                             
-                            } placeholder: {
-                                Color.red
-                            }
+                            WebImage(url: URL(string: post.image)) { image in
+                                   image.resizable()
+                                    .scaledToFill()
+                                    .frame(width: .screenWidth - 50,height: 200)
+                                    .clipShape(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                        )
+                                    .padding(.horizontal,5)
+                               } placeholder: {
+                                       Rectangle().foregroundColor(.gray)
+                               }
+//                            AsyncImage(url: URL(string: post.image)) { image in
+//                                image.resizable()
+//                                    .scaledToFit()
+//                                    .frame(maxWidth: .infinity)
+//                             
+//                            } placeholder: {
+//                                Color.red
+//                            }
                             Divider()
                         }
                         .padding()

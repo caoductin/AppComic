@@ -91,10 +91,16 @@ struct AccountView: View {
                         .frame(maxWidth: .infinity,alignment: .leading)
                         .padding(.leading,10)
                     VStack{
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                            .font(.system(size: 19,weight: .bold,design: .default))
-                        Text("Log out")
-                            .font(.system(size: 19,weight: .semibold))
+                        Button {
+                            AccountViewMD.isLogin.toggle()
+                        } label: {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                                .font(.system(size: 19,weight: .bold,design: .default))
+                            Text("Log out")
+                                .font(.system(size: 19,weight: .semibold))
+                        }
+
+                      
                     }
                     
                 }
