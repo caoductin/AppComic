@@ -220,10 +220,7 @@ class ServiceCall {
                     return
                 }
                 
-                // Debugging: Print raw response
-                if let rawResponse = String(data: data, encoding: .utf8) {
-                 //   print("Raw Response: \(rawResponse)")
-                }
+            
                 
                 do {
                     if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary] {

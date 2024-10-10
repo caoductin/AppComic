@@ -8,61 +8,78 @@ import SwiftUI
 
 import WebKit
 
-struct RichTextEditorView: UIViewRepresentable {
-    @Binding var htmlContent: String
-    
-    func makeUIView(context: Context) -> WKWebView {
-        let webView = WKWebView()
-        
-        // Load HTML content that includes a rich text editor like Quill
-        let htmlString = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-        </head>
-        <body>
-        <div id="editor"></div>
-        <script>
-          var quill = new Quill('#editor', {
-            theme: 'snow'
-          });
-
-          function getHtmlContent() {
-            return quill.root.innerHTML;
-          }
-        </script>
-        </body>
-        </html>
-        """
-        webView.loadHTMLString(htmlString, baseURL: nil)
-        return webView
-    }
-    
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        // Run JavaScript to retrieve the HTML content from the editor
-        webView.evaluateJavaScript("getHtmlContent()") { result, error in
-            if let html = result as? String {
-                DispatchQueue.main.async {
-                    self.htmlContent = html
-                }
-            }
-        }
-    }
-}
 struct CreatePost: View {
     @State private var htmlContent: String = ""
-    
+    @State private var isPickerPresented = false
+    @StateObject private var viewModel = ImagePickerViewModel()
+    @State private var uploadProgress: Double = 0.0
     var body: some View {
         VStack {
+            if let image = viewModel.selectedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200, height: 200)
+            } else {
+                Text("Select an Image")
+                    .padding()
+                    .background(Color.gray)
+                    .cornerRadius(8)
+            }
+            
+            Button("Select Image") {
+                isPickerPresented = true
+            }
+            .padding()
+            
+            Button("Upload Image") {
+                viewModel.uploadImageToFirebase()
+            }
+            .padding()
+            
+            Text(viewModel.uploadStatus)
+                .padding()
+                .foregroundColor(.blue)
+            // Display upload progress
+            if viewModel.uploadProgress > 0 && viewModel.uploadProgress < 1 {
+                VStack {
+                    ProgressView(value: viewModel.uploadProgress)
+                        .padding()
+                    
+                    // Display the percentage as a number
+                    Text("\(Int(viewModel.uploadProgress * 100))% uploaded")
+                        .padding()
+                        .foregroundColor(.blue)
+                }
+            }            // Display the uploaded image from the URL
+            if let imageURL = viewModel.imageURL {
+                AsyncImage(url: imageURL) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView() // Loading indicator while the image is loading
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                    case .failure:
+                        Text("Failed to load image")
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+            }
             RichTextEditorView(htmlContent: $htmlContent)
                 .frame(width: .screenWidth)
                 .frame(height: 300)
-            Button("Save HTML") {
+            Button("Tạo bài báo") {
+                print("Button clicked")
                 print("HTML content: \(htmlContent)")
                 // Save the HTML content here
             }
+        }
+        .sheet(isPresented: $isPickerPresented) {
+            ImagePickerView(selectedImage: $viewModel.selectedImage)
         }
     }
 }
