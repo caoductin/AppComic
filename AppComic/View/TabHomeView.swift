@@ -15,14 +15,7 @@ struct TabHomeView: View {
     @StateObject var viewModel: PostViewModel = PostViewModel.shared
     @State private var currentIndex: Int = 0
     @Environment(\.modelContext) private var modelContext
-//    
-//    func categoryFilter(for category: String) -> Predicate<PostModelSD> {
-//        return #Predicate { post in
-//            post.category == category
-//        }
-//    }
-//    // Create a computed property that updates the query based on the selectedCategory
-//        @Query var PostData: [PostModelSD]
+    
     var selectedCategory: String  // Accept selected category as a parameter
 
         // Computed property to filter posts based on the selected category

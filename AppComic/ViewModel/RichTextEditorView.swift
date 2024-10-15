@@ -43,28 +43,70 @@ struct RichTextEditorView: UIViewRepresentable {
         <head>
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <style>
+            body {
+                direction: ltr;
+                text-align: left;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-size: 16px;
+            }
+            #editor {
+                direction: ltr;
+                text-align: left;
+            }
+        </style>
         </head>
         <body>
         <div id="editor"></div>
         <script>
           var quill = new Quill('#editor', {
-            theme: 'snow'
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'direction': 'ltr' }, { 'align': [] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['link', 'blockquote', 'code-block']
+                ]
+            }
           });
           
           quill.on('text-change', function() {
             window.webkit.messageHandlers.htmlContentHandler.postMessage(quill.root.innerHTML);
           });
+            // Disable autocorrect in Quill's editor
+                    var editor = document.querySelector('#editor');
+                    editor.setAttribute('autocorrect', 'off');
+                    editor.setAttribute('autocomplete', 'off');
+                    editor.setAttribute('autocapitalize', 'off');
+                    editor.setAttribute('spellcheck', 'false');
         </script>
         </body>
         </html>
         """
+
         
         webView.loadHTMLString(htmlString, baseURL: nil)
         return webView
     }
-
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        let setHtmlContentScript = "quill.root.innerHTML = '\(htmlContent)';"
-        uiView.evaluateJavaScript(setHtmlContentScript, completionHandler: nil)
+        let currentHtmlContentScript = "quill.root.innerHTML;"
+        uiView.evaluateJavaScript(currentHtmlContentScript) { (result, error) in
+            if let currentHtml = result as? String, currentHtml != self.htmlContent {
+                let escapedHtmlContent = self.htmlContent
+                    .replacingOccurrences(of: "\\", with: "\\\\")
+                    .replacingOccurrences(of: "'", with: "\\'")
+                    .replacingOccurrences(of: "\n", with: "\\n")
+                    .replacingOccurrences(of: "\r", with: "")
+                
+                let setHtmlContentScript = "quill.root.innerHTML = '\(escapedHtmlContent)';"
+                uiView.evaluateJavaScript(setHtmlContentScript, completionHandler: nil)
+            }
+        }
     }
+
+
+//    func updateUIView(_ uiView: WKWebView, context: Context) {
+//        let setHtmlContentScript = "quill.root.innerHTML = '\(htmlContent)';"
+//        uiView.evaluateJavaScript(setHtmlContentScript, completionHandler: nil)
+//    }
 }

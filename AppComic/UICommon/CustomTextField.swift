@@ -124,7 +124,7 @@ struct CustomSecureField: View {
                     }
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
-                    .padding()
+              
                 
                 
             }
@@ -142,7 +142,7 @@ struct CustomSecureField: View {
 
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
-                    .padding()
+         
                 
                 
                 
@@ -150,14 +150,21 @@ struct CustomSecureField: View {
             Button(action: {
                 isCheck.toggle()
             }, label: {
-                Image(systemName: isCheck ? "eye.fill" : "eye.slash.circle.fill")
+                Image(systemName: isCheck ? "eye.slash.circle" : "eye.slash.circle.fill")
                     .resizable()
                     .scaledToFit()
-                    .frame(width:19)
+                    .frame(height:20)
             })
             
         }
+        .padding(.vertical,15)
         .padding(.horizontal,12)
+        .frame(maxWidth: .infinity) // Ensures both TextField and SecureField take up equal width
+           .overlay(
+               RoundedRectangle(cornerRadius: 40)
+                   .stroke(Color.gray, lineWidth: 1)
+           )
+           .animation(.default, value: isCheck)
         .background(
             RoundedRectangle(cornerRadius: 40)
                 .fill(Color.gray.opacity(0.2)) // Background color with opacity
@@ -167,7 +174,5 @@ struct CustomSecureField: View {
 }
 #Preview {
     @State var txt: String = ""
-    return CustomTextFieldView(txt:$txt) {
-        print("tin dep trai ")
-    }
+    return CustomSecureField(txt: $txt)
 }

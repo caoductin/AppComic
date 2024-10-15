@@ -27,12 +27,12 @@ struct AppComicApp: App {
     @StateObject var loginVM: LoginViewModel = LoginViewModel.shared
     let container = try! ModelContainer(for: PostModelSD.self)
     // Query to count existing posts
-    
+
     @MainActor
     private func importData() async {
         print("importData called")  // Add this line to verify the function is running
         let context = container.mainContext
-        
+
         // Check if there are already posts in the context
         // Use FetchDescriptor to fetch existing posts
         let fetchDescriptor = FetchDescriptor<PostModelSD>()
@@ -40,10 +40,10 @@ struct AppComicApp: App {
         
         Swift.debugPrint("this is \(existingPosts)")  // This will give you the existing posts
         
-//        if !existingPosts.isEmpty {
-//            print("Existing posts found in context. Skipping API call.")
-//            return // Exit the function if there are existing posts
-//        }
+        if !existingPosts.isEmpty {
+            print("Existing posts found in context. Skipping API call.")
+            return // Exit the function if there are existing posts
+        }
         
         
         do {

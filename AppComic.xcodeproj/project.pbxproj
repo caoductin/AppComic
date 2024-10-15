@@ -170,6 +170,7 @@
 			children = (
 				7731B4E32CB0263600F3652B /* AccountView.swift */,
 				7731B4E82CB0466200F3652B /* CreatePost.swift */,
+				77A9C8D72CBE8ACC00FF5E17 /* New Group */,
 				775D13422CB0C1360097EF54 /* ManagePostView.swift */,
 				775D13442CB0C88E0097EF54 /* PostCellForManageView.swift */,
 				775D13462CB0D44A0097EF54 /* TestViewDelete.swift */,
@@ -308,6 +309,13 @@
 				778009662CA6B31100C86555 /* HTMLTextView.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		77A9C8D72CBE8ACC00FF5E17 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

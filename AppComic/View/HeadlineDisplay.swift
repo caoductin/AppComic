@@ -6,35 +6,33 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct HeadlineDisplay: View {
     @State var post: PostModelSD = PostModelSD(dict: [:])
 
     var body: some View {
         ZStack{
+            WebImage(url: URL(string: post.image)) { image in
+                   image.resizable()
+                    .scaledToFill()
+                    .frame(width: .screenWidth/1.1,height: .screenHeight/4)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.black.opacity(0.4))
+                    )
+               } placeholder: {
+                       Rectangle().foregroundColor(.gray)
+               }
 
-                AsyncImage(url: URL(string: post.image)) { image in
-                    image.resizable()
-                        .scaledToFill()
-                        .frame(width: .screenWidth/1.1,height: .screenHeight/4)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.black.opacity(0.4))
-                        )
-                    
-                    
-                } placeholder: {
-                    ProgressView()
-                }
             VStack{
                 HStack{
                     Text(post.category)
                         .foregroundStyle(.white)
-                        .padding(.leading,10)
                     Text("|")
                         .foregroundStyle(.white)
-                    Text(post.updateAt.elapsedTimeString() ?? "1")
+                    Text(post.updateAt.elapsedTimeString() ?? "00:00:00")
                         .foregroundStyle(.white)
                     Spacer()
 
@@ -43,7 +41,11 @@ struct HeadlineDisplay: View {
                 Text(post.title)
                     .font(.system(size: 20, weight: .bold, design: .default))
                     .foregroundStyle(.white)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(3)
+                 
             }
+            .padding(.horizontal,20)
             .frame(width: .screenWidth/1.1,height: .screenHeight/4,alignment: .bottom)
 
               

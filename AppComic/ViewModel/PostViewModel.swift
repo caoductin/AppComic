@@ -12,6 +12,12 @@ class PostViewModel: ObservableObject {
     @Published var user: UserModel?
     @Published var errorMessage: String = ""
     @Published var isLoading: Bool = false
+    //for create post
+    @Published var title : String = ""
+    @Published var image: String? = ""
+    @Published var content: String = ""
+    @Published var category : String? = ""
+    
     private var userId: String = ""
     @Environment(\.modelContext) private var modelContext
     
@@ -19,6 +25,10 @@ class PostViewModel: ObservableObject {
         self.getPost()
         
     }
+    init(test: String){
+        
+    }
+  
 //    init(postId: String){
 //        self.deletePost(postId: postId,context: ModelContext)
 //    }
@@ -79,6 +89,51 @@ class PostViewModel: ObservableObject {
         })
     }
     
+        //create post for admin
+    func CreatePost(){
+        isLoading = true
+        errorMessage = ""
+        
+        let parameters: [String: Any] = [
+            "title": title,
+            "category": category ?? "uncategory",
+            "image": image ?? "",
+            "content" : content
+        ]
+        let path = "http://localhost:3000/api/post/create"
+        ServiceCall.post(parameter: parameters, path: path, isToken: true, withSuccess: { response in
+            Swift.debugPrint("this is respone \(response)")
+            if let responseDict = response as?  NSDictionary {
+                // Assuming the response dictionary contains the newly created comment data
+                Swift.debugPrint(responseDict)
+                if let responseSuccess = responseDict["success"] as? Int{
+                    DispatchQueue.main.async {
+                        self.errorMessage = responseDict["message"] as? String ?? "Fail to Create"
+                    print("respose Sucess")
+         
+                    }
+                    return
+                }
+
+                self.postModel.append(PostModel(dict: responseDict as? Dictionary<String, Any> ?? [:]))
+                DispatchQueue.main.async {
+                    // Add the newly created comment to the comment list
+                    Swift.debugPrint(self.postModel)
+
+                }
+              
+            } else {
+                print("Response is not valid")
+            }
+        }, failure: { error in
+            DispatchQueue.main.async {
+                print("Failed to create post")
+                self.errorMessage = error?.localizedDescription ?? "Unknown error"
+                self.isLoading = false
+            }
+        })
+    }
+
     
     func getPost() {
         isLoading = true
@@ -94,7 +149,6 @@ class PostViewModel: ObservableObject {
                 let postModels = postsArray.compactMap { PostModel(dict: $0) }
                 self.postModel = postModels
                     self.isLoading = false
-                    Swift.debugPrint(self.postModel)
                 
             } else {
                 DispatchQueue.main.async {
@@ -138,6 +192,7 @@ class PostViewModel: ObservableObject {
                    try? context.save()
                }
     }
+    
 
 
 }
