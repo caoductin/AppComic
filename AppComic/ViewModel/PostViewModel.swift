@@ -32,11 +32,19 @@ class PostViewModel: ObservableObject {
 //    init(postId: String){
 //        self.deletePost(postId: postId,context: ModelContext)
 //    }
-   
-    func deletePost(postId: String,context: ModelContext){
+    func removePost(byId id: String) {
+        if let index = self.postModel.firstIndex(where: { $0.id == id  }) {
+            self.postModel.remove(at: index)
+        } else {
+            print("Post with id \(id) not found.")
+        }
+    }
+
+    func deletePost(postId: String){
         isLoading = true
         errorMessage = ""
         //get userId
+        print("delete post is call")
         if let userId = UserDefaults.standard.string(forKey: "userId"){
             self.userId = userId
             print("userid\(self.userId)")
@@ -63,8 +71,7 @@ class PostViewModel: ObservableObject {
                        if message == "Post deleted successfully" {
                            // Deletion was successful
                            print("Delete success: \(message)")
-                           // Delete from SwiftData
-                           self.deletePostFromSwiftData(postId: postId, context: context)
+                           self.removePost(byId: postId)
                            self.errorMessage = "The post has been deleted successfully."
                        } else {
                            // Handle unexpected messages
@@ -180,18 +187,7 @@ class PostViewModel: ObservableObject {
     }
     
     
-    private func deletePostFromSwiftData(postId: String, context: ModelContext) {
-        // Create a FetchDescriptor with the predicate to find the post by ID
-               let descriptor = FetchDescriptor<PostModelSD>(
-                   predicate: #Predicate { $0.id == postId }
-               )
-
-               // Fetch the post using the descriptor
-               if let postToDelete = try? context.fetch(descriptor).first {
-                   context.delete(postToDelete)
-                   try? context.save()
-               }
-    }
+    
     
 
 

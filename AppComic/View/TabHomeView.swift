@@ -12,7 +12,7 @@ import SwiftUI
 import SwiftData
 
 struct TabHomeView: View {
-    @StateObject var viewModel: PostViewModel = PostViewModel.shared
+    @StateObject var PostVM: PostViewModel = PostViewModel.shared
     @State private var currentIndex: Int = 0
     @Environment(\.modelContext) private var modelContext
     
@@ -21,17 +21,15 @@ struct TabHomeView: View {
         // Computed property to filter posts based on the selected category
         @Query(sort: \PostModelSD.createAt, order: .reverse) private var PostData: [PostModelSD]
 
-        // Filtering posts based on the selected category
-        private var filteredPosts: [PostModelSD] {
-            if(selectedCategory == "Mới nhất"){
-                return PostData
-            }
-            else{
-                return PostData.filter { $0.category == selectedCategory }
-            }
-
+    private var filteredPosts: [PostModel]{
+        if(selectedCategory == "Mới nhất"){
+            return PostVM.postModel
         }
-        
+        else{
+            return PostVM.postModel.filter { $0.category == selectedCategory }
+        }
+    }
+    
     var body: some View {
         NavigationStack{
             VStack{

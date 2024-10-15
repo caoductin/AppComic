@@ -21,12 +21,7 @@ struct PostView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             Text(post.title)
                                 .font(.headline)
-//                            HTMLTextView(htmlContent: post.content)
-//                                .scaledToFit()
-//                                .frame(maxHeight: .infinity)
-//                         
-                            //                                .font(.system(.headline))
-                            // Optionally load image if you have image URL
+
                             WebImage(url: URL(string: post.image)) { image in
                                    image.resizable()
                                     .scaledToFill()
@@ -38,14 +33,7 @@ struct PostView: View {
                                } placeholder: {
                                        Rectangle().foregroundColor(.gray)
                                }
-//                            AsyncImage(url: URL(string: post.image)) { image in
-//                                image.resizable()
-//                                    .scaledToFit()
-//                                    .frame(maxWidth: .infinity)
-//                             
-//                            } placeholder: {
-//                                Color.red
-//                            }
+
                             Divider()
                         }
                         .padding()

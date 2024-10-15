@@ -47,7 +47,13 @@ struct AccountView: View {
                     
                     Divider()
                         .frame(height: 1)
+                    NavigationLink {
+                        ManagePostView()
+                    } label: {
                         CellAccountView(imageName: "magazine", title: "Posts")
+                    }
+                    .foregroundStyle(.black)
+                   
          
                     Divider()
                         .frame(height: 1)
@@ -59,6 +65,8 @@ struct AccountView: View {
                         CellAccountView(imageName: "ellipsis.message", title: "Comment")
                 
                     Divider()
+                        .frame(height: 1)
+                    CellAccountView(imageName: "square.and.arrow.down.on.square", title: "Saved posts")
                 
                 }
                 .frame(maxWidth: .screenWidth/1.1)
