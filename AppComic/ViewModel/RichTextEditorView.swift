@@ -9,6 +9,8 @@ import SwiftUI
 import WebKit
 struct RichTextEditorView: UIViewRepresentable {
     @Binding var htmlContent: String
+    var onEditorLoaded: (() -> Void)? // Add an optional completion callback
+
     
     class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         var parent: RichTextEditorView
@@ -16,6 +18,11 @@ struct RichTextEditorView: UIViewRepresentable {
         init(_ parent: RichTextEditorView) {
             self.parent = parent
         }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+                    // This is called when the web view finishes loading.
+                    parent.onEditorLoaded?() // Trigger the callback when the editor is ready
+                }
         
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             if message.name == "htmlContentHandler", let html = message.body as? String {
@@ -105,8 +112,5 @@ struct RichTextEditorView: UIViewRepresentable {
     }
 
 
-//    func updateUIView(_ uiView: WKWebView, context: Context) {
-//        let setHtmlContentScript = "quill.root.innerHTML = '\(htmlContent)';"
-//        uiView.evaluateJavaScript(setHtmlContentScript, completionHandler: nil)
-//    }
+   
 }

@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 
 struct AccountView: View {
     @StateObject var AccountViewMD: LoginViewModel = LoginViewModel.shared
-    
+    @StateObject var PostVM =  PostViewModel.shared
     var body: some View {
         
         ZStack{
@@ -48,7 +48,7 @@ struct AccountView: View {
                     Divider()
                         .frame(height: 1)
                     NavigationLink {
-                        ManagePostView()
+                        ManagePostView(PostViewMD:PostVM )
                     } label: {
                         CellAccountView(imageName: "magazine", title: "Posts")
                     }

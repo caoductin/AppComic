@@ -17,6 +17,8 @@ class PostViewModel: ObservableObject {
     @Published var image: String? = ""
     @Published var content: String = ""
     @Published var category : String? = ""
+    //for html Content
+    @Published var htmlContent: String = ""
     
     private var userId: String = ""
     @Environment(\.modelContext) private var modelContext
@@ -68,10 +70,14 @@ class PostViewModel: ObservableObject {
                    if let jsonResponse = response as? NSDictionary,
                       let message = jsonResponse["message"] as? String {
                        // Check if the response message indicates success
-                       if message == "Post deleted successfully" {
+                       if message == "The post has been successfully deleted" {
                            // Deletion was successful
                            print("Delete success: \(message)")
-                           self.removePost(byId: postId)
+                       
+                               self.isLoading = true
+                               self.removePost(byId: postId)
+                           Swift.debugPrint("this is my post\(self.postModel)")
+                    
                            self.errorMessage = "The post has been deleted successfully."
                        } else {
                            // Handle unexpected messages
