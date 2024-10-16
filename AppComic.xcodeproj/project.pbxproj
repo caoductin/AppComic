@@ -61,6 +61,7 @@
 		778009692CA6ED3900C86555 /* TabHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778009682CA6ED3900C86555 /* TabHomeView.swift */; };
 		7780096B2CA6F81800C86555 /* PostDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7780096A2CA6F81800C86555 /* PostDisplay.swift */; };
 		7780096D2CA6FCC100C86555 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7780096C2CA6FCC100C86555 /* PostDetailView.swift */; };
+		77F0FF852CC010290075AC12 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F0FF842CC010280075AC12 /* SearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,7 @@
 		778009682CA6ED3900C86555 /* TabHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabHomeView.swift; sourceTree = "<group>"; };
 		7780096A2CA6F81800C86555 /* PostDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDisplay.swift; sourceTree = "<group>"; };
 		7780096C2CA6FCC100C86555 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		77F0FF842CC010280075AC12 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +316,7 @@
 			children = (
 				775D13422CB0C1360097EF54 /* ManagePostView.swift */,
 				775D13442CB0C88E0097EF54 /* PostCellForManageView.swift */,
+				77F0FF842CC010280075AC12 /* SearchView.swift */,
 			);
 			path = ManagePost;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				7780095A2CA4D42E00C86555 /* TabData.swift in Sources */,
 				775D13472CB0D44A0097EF54 /* TestViewDelete.swift in Sources */,
 				778009502CA3A94100C86555 /* ServiceCall.swift in Sources */,
+				77F0FF852CC010290075AC12 /* SearchView.swift in Sources */,
 				778009442CA2F75C00C86555 /* ButtonCustom.swift in Sources */,
 				7779A9802CAAE431001E8A16 /* PostModelSD.swift in Sources */,
 				7780096B2CA6F81800C86555 /* PostDisplay.swift in Sources */,

@@ -11,8 +11,7 @@ import SDWebImageSwiftUI
 struct PostCellForManageView: View {
     @State var post:PostModel = PostModel(dict: [:])
     
-     var onDelete:(()->())?
-    @State var onEdit:(()->())?
+    var onDelete:(()->())?
     var body: some View {
         HStack(alignment:.top){
             WebImage(url: URL(string: post.image)) { image in
@@ -23,7 +22,9 @@ struct PostCellForManageView: View {
                         
                         RoundedRectangle(cornerRadius: 10)                                )
                } placeholder: {
+                   
                        Rectangle().foregroundColor(.gray)
+                       .frame(width: 140,height: 100)
                }
                // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
 
@@ -43,12 +44,11 @@ struct PostCellForManageView: View {
                 Spacer()
                 HStack{
                     Text("\(post.createAt.toFormattedDateString()!)")
-                    Button {
-                        onEdit?()
-                        
-                    } label: {
-                        Text("Edit")
-                    }
+
+                    NavigationLink(destination: CreatePost(postToEdit: post)) {
+                                    Text("Edit")
+                            .foregroundStyle(.blue)
+                                }
                     
                     Button {
                         onDelete?()
