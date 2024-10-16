@@ -12,6 +12,12 @@ class PostViewModel: ObservableObject {
     @Published var user: UserModel?
     @Published var errorMessage: String = ""
     @Published var isLoading: Bool = false
+    //for create post
+    @Published var title : String = ""
+    @Published var image: String? = ""
+    @Published var content: String = ""
+    @Published var category : String? = ""
+    
     private var userId: String = ""
     @Environment(\.modelContext) private var modelContext
     
@@ -19,14 +25,26 @@ class PostViewModel: ObservableObject {
         self.getPost()
         
     }
+    init(test: String){
+        
+    }
+  
 //    init(postId: String){
 //        self.deletePost(postId: postId,context: ModelContext)
 //    }
-   
-    func deletePost(postId: String,context: ModelContext){
+    func removePost(byId id: String) {
+        if let index = self.postModel.firstIndex(where: { $0.id == id  }) {
+            self.postModel.remove(at: index)
+        } else {
+            print("Post with id \(id) not found.")
+        }
+    }
+
+    func deletePost(postId: String){
         isLoading = true
         errorMessage = ""
         //get userId
+        print("delete post is call")
         if let userId = UserDefaults.standard.string(forKey: "userId"){
             self.userId = userId
             print("userid\(self.userId)")
@@ -53,8 +71,7 @@ class PostViewModel: ObservableObject {
                        if message == "Post deleted successfully" {
                            // Deletion was successful
                            print("Delete success: \(message)")
-                           // Delete from SwiftData
-                           self.deletePostFromSwiftData(postId: postId, context: context)
+                           self.removePost(byId: postId)
                            self.errorMessage = "The post has been deleted successfully."
                        } else {
                            // Handle unexpected messages
@@ -79,6 +96,51 @@ class PostViewModel: ObservableObject {
         })
     }
     
+        //create post for admin
+    func CreatePost(){
+        isLoading = true
+        errorMessage = ""
+        
+        let parameters: [String: Any] = [
+            "title": title,
+            "category": category ?? "uncategory",
+            "image": image ?? "",
+            "content" : content
+        ]
+        let path = "http://localhost:3000/api/post/create"
+        ServiceCall.post(parameter: parameters, path: path, isToken: true, withSuccess: { response in
+            Swift.debugPrint("this is respone \(response)")
+            if let responseDict = response as?  NSDictionary {
+                // Assuming the response dictionary contains the newly created comment data
+                Swift.debugPrint(responseDict)
+                if let responseSuccess = responseDict["success"] as? Int{
+                    DispatchQueue.main.async {
+                        self.errorMessage = responseDict["message"] as? String ?? "Fail to Create"
+                    print("respose Sucess")
+         
+                    }
+                    return
+                }
+
+                self.postModel.append(PostModel(dict: responseDict as? Dictionary<String, Any> ?? [:]))
+                DispatchQueue.main.async {
+                    // Add the newly created comment to the comment list
+                    Swift.debugPrint(self.postModel)
+
+                }
+              
+            } else {
+                print("Response is not valid")
+            }
+        }, failure: { error in
+            DispatchQueue.main.async {
+                print("Failed to create post")
+                self.errorMessage = error?.localizedDescription ?? "Unknown error"
+                self.isLoading = false
+            }
+        })
+    }
+
     
     func getPost() {
         isLoading = true
@@ -94,7 +156,6 @@ class PostViewModel: ObservableObject {
                 let postModels = postsArray.compactMap { PostModel(dict: $0) }
                 self.postModel = postModels
                     self.isLoading = false
-                    Swift.debugPrint(self.postModel)
                 
             } else {
                 DispatchQueue.main.async {
@@ -126,18 +187,8 @@ class PostViewModel: ObservableObject {
     }
     
     
-    private func deletePostFromSwiftData(postId: String, context: ModelContext) {
-        // Create a FetchDescriptor with the predicate to find the post by ID
-               let descriptor = FetchDescriptor<PostModelSD>(
-                   predicate: #Predicate { $0.id == postId }
-               )
-
-               // Fetch the post using the descriptor
-               if let postToDelete = try? context.fetch(descriptor).first {
-                   context.delete(postToDelete)
-                   try? context.save()
-               }
-    }
+    
+    
 
 
 }

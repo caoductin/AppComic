@@ -8,65 +8,49 @@ import SwiftUI
 import PhotosUI
 import FirebaseStorage // Make sure Firebase is imported
 
+import SwiftUI
 
-struct getAllUser: View {
-    @State private var isPickerPresented = false
-    @StateObject private var viewModel = ImagePickerViewModel()
+
+struct CategorySelectionView: View {
+    @StateObject private var viewModel = PostViewModel()
+    @State private var showCategorySelection = false
+    @State private var categories = ["Technology", "Science", "Sports", "Health", "Education"]
     
     var body: some View {
-        VStack {
-            if let image = viewModel.selectedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
-            } else {
-                Text("Select an Image")
+        VStack(spacing: 40) {
+            // Button to show category selection
+            Button(action: {
+                showCategorySelection.toggle() // Toggles the Menu display
+            }, label: {
+                Text((viewModel.category!.isEmpty ? "Select Category" : viewModel.category) ?? "tin")
+                    .font(.system(size: 18, weight: .bold, design: .default))
+                    .frame(minWidth: 100, alignment: .center)
                     .padding()
-                    .background(Color.gray)
+                    .background(Color.blue.opacity(0.2))
                     .cornerRadius(8)
-            }
-
-            Button("Select Image") {
-                isPickerPresented = true
-            }
+            })
             .padding()
-            
-            Button("Upload Image") {
-                viewModel.uploadImageToFirebase()
-            }
-            .padding()
-
-            Text(viewModel.uploadStatus)
-                .padding()
-                .foregroundColor(.blue)
-            
-            // Display the uploaded image from the URL
-            if let imageURL = viewModel.imageURL {
-                AsyncImage(url: imageURL) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView() // Loading indicator while the image is loading
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                    case .failure:
-                        Text("Failed to load image")
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
+            .actionSheet(isPresented: $showCategorySelection) { // can you confirmationDialog on ios 15 or later
+                ActionSheet(title: Text("Select Category"), buttons: createActionSheetButtons())
+             
             }
         }
-        .sheet(isPresented: $isPickerPresented) {
-            ImagePickerView(selectedImage: $viewModel.selectedImage)
+    }
+    
+    // Create ActionSheet buttons dynamically
+    func createActionSheetButtons() -> [ActionSheet.Button] {
+        var buttons: [ActionSheet.Button] = categories.map { category in
+            .default(Text(category)) {
+                viewModel.category = category
+            }
         }
+        buttons.append(.cancel())
+        return buttons
     }
 }
 
 
+
 #Preview {
-    getAllUser()
+    CategorySelectionView()
 }

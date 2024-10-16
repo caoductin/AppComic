@@ -29,20 +29,7 @@ struct AccountView: View {
                    }
                    // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
 
-                   .transition(.fade(duration: 0.5)) // Fade Transition with duration
-//                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/appcomic-3dbe4.appspot.com/o/1728038971007phapluat2.jpg?alt=media&token=b2e63d3a-4e06-4c13-af1d-2e29fddd570a")) { image in
-//                    image
-//                        .resizable()
-//                        .scaledToFill()
-//                        .frame(width: 100,height: 100)
-//                        .clipShape(
-//                            RoundedRectangle(cornerRadius: 100)
-//                        )
-//                        .padding(.top,20)
-//                   
-//                } placeholder: {
-//                   ProgressView()
-//                }
+                   .transition(.fade(duration: 0.5)) // Fade
                 Text("Cao Duc tin")
                     .font(.headline)
                 Spacer()
@@ -60,7 +47,13 @@ struct AccountView: View {
                     
                     Divider()
                         .frame(height: 1)
+                    NavigationLink {
+                        ManagePostView()
+                    } label: {
                         CellAccountView(imageName: "magazine", title: "Posts")
+                    }
+                    .foregroundStyle(.black)
+                   
          
                     Divider()
                         .frame(height: 1)
@@ -72,6 +65,8 @@ struct AccountView: View {
                         CellAccountView(imageName: "ellipsis.message", title: "Comment")
                 
                     Divider()
+                        .frame(height: 1)
+                    CellAccountView(imageName: "square.and.arrow.down.on.square", title: "Saved posts")
                 
                 }
                 .frame(maxWidth: .screenWidth/1.1)
